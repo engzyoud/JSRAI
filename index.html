@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structural Collapse AI (SCAI)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-top">
+      <div class="bismillah">بسم الله الرحمن الرحيم</div>
+      <div class="brand">
+        <div class="brand-title">Structural Collapse AI</div>
+        <div class="brand-sub">Predicting Building Collapse Using AI (ACI + ASCE)</div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="assessment.html">Assessment</a>
+        <a href="result.html">Result</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <h1>Structural Collapse AI</h1>
+          <p>
+            A smart assessment tool to estimate the risk of building collapse using
+            <strong>ACI 318</strong> and <strong>ASCE 7</strong> guidelines.
+          </p>
+          <p class="hero-note">
+            <strong>Note:</strong> This tool is informative only and does not replace a real structural inspection.
+          </p>
+          <a class="btn" href="assessment.html">Start Assessment</a>
+        </div>
+
+        <div class="hero-card">
+          <h2>What you will get</h2>
+          <ul class="card-list">
+            <li>20 professional questions (EN/AR)</li>
+            <li>AI-based risk score (0–100)</li>
+            <li>Risk level + recommendations</li>
+            <li>Download PDF report</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>How it works</h2>
+        <div class="grid">
+          <div class="feature">
+            <h3>Answer 20 questions</h3>
+            <p>Rate each item from 1 (poor) to 5 (excellent).</p>
+          </div>
+          <div class="feature">
+            <h3>Get Risk Score</h3>
+            <p>Score is calculated using weighted factors aligned with ACI & ASCE.</p>
+          </div>
+          <div class="feature">
+            <h3>Download Report</h3>
+            <p>Export a professional PDF report for documentation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© <span id="year"></span> Structural Collapse AI (SCAI)</div>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="assessment.html">Assessment</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").innerText = new Date().getFullYear();
+  </script>
+</body>
+</html>
