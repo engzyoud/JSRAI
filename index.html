@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structural Collapse AI</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">Structural Collapse AI</div>
+    <div class="owner">© Eng Suhaib Al_Zyoud</div>
+    <div class="lang-switch">
+      <button id="langAR" class="lang-btn active">عربي</button>
+      <button id="langEN" class="lang-btn">EN</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro" id="intro">
+      <h1 id="title">تنبؤ انهيار المبنى باستخدام الذكاء الاصطناعي</h1>
+      <p id="subtitle">
+        أداة مساعدة مبنية على قواعد ACI و ASCE لتقييم خطر الانهيار المتسلسل. هذه الأداة لا تغني عن الفحص الإنشائي الميداني ولا تتحمل مسؤولية أي قرار بناءً على نتائجها.
+      </p>
+      <div class="intro-buttons">
+        <button id="startBtn" class="btn primary">ابدأ التقييم</button>
+        <button id="privacyBtn" class="btn secondary">سياسة الخصوصية &amp; إخلاء المسؤولية</button>
+      </div>
+    </section>
+
+    <section class="wizard hidden" id="wizard">
+      <div class="wizard-header">
+        <div class="step-counter" id="stepCounter">الخطوة 1 / 5</div>
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+
+      <div class="wizard-body" id="wizardBody"></div>
+
+      <div class="wizard-footer">
+        <button id="backBtn" class="btn secondary">رجوع</button>
+        <button id="nextBtn" class="btn primary">التالي</button>
+      </div>
+    </section>
+
+    <section class="result hidden" id="result">
+      <h2 id="resultTitle">نتيجة التقييم</h2>
+      <div id="resultSummary" class="result-summary"></div>
+      <div id="resultDetails" class="result-details"></div>
+      <div class="result-actions">
+        <button id="printBtn" class="btn primary">طباعة PDF</button>
+        <button id="restartBtn" class="btn secondary">إعادة التقييم</button>
+      </div>
+    </section>
+
+    <section class="privacy hidden" id="privacy">
+      <h2>سياسة الخصوصية &amp; إخلاء المسؤولية</h2>
+      <div class="privacy-content">
+        <h3>1. الخصوصية</h3>
+        <p>
+          هذه الأداة لا تجمع بيانات شخصية. أي بيانات تُدخل في التقييم تُحفظ مؤقتًا داخل جهاز المستخدم فقط.
+        </p>
+        <h3>2. إخلاء المسؤولية</h3>
+        <p>
+          الأداة **للمساعدة فقط** ولا تغني عن الفحص الإنشائي الميداني. لا يتحمل صاحب الأداة أي مسؤولية عن أي قرار أو ضرر ناتج عن استخدام النتائج.
+        </p>
+        <h3>3. الاستناد للكود</h3>
+        <p>
+          تم بناء منطق التقييم بناءً على مبادئ ACI 318 و ASCE 7، كإرشادات عامة فقط.
+        </p>
+      </div>
+      <button id="privacyBackBtn" class="btn secondary">رجوع</button>
+    </section>
+
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
