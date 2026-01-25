@@ -1,0 +1,224 @@
+:root {
+  --bg: #0b1220;
+  --card: rgba(255,255,255,0.08);
+  --card2: rgba(255,255,255,0.12);
+  --text: #e8f0ff;
+  --muted: rgba(232,240,255,0.7);
+  --accent: #5c7cff;
+  --accent2: #39d98a;
+  --danger: #ff5c5c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #0f1a2b, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  position: sticky;
+  top: 0;
+  background: rgba(11,18,32,0.75);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.owner {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.lang-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-btn {
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: var(--text);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.lang-btn.active {
+  background: rgba(92,124,255,0.25);
+  border-color: var(--accent);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.hidden { display: none; }
+
+.intro {
+  background: var(--card);
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.intro h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+}
+.intro p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+
+.intro-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-color: rgba(255,255,255,0.18);
+  color: #fff;
+}
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.wizard {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.wizard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.step-counter {
+  color: var(--muted);
+}
+.progress-bar {
+  flex: 1;
+  height: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+.wizard-body {
+  display: grid;
+  gap: 18px;
+}
+
+.question-card {
+  background: rgba(255,255,255,0.06);
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.question-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+.question-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+.options {
+  display: grid;
+  gap: 10px;
+}
+.option {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.option:hover {
+  border-color: rgba(92,124,255,0.35);
+  background: rgba(92,124,255,0.06);
+}
+.option input {
+  margin-top: 2px;
+}
+.option span {
+  color: var(--muted);
+}
+
+.wizard-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.result {
+  background: var(--card);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.result-summary {
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  margin-bottom: 14px;
+}
+.result-details {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.privacy-content h3 {
+  margin: 14px 0 6px;
+}
+.privacy-content p {
+  color: var(--muted);
+  line-height: 1.6;
+  }
