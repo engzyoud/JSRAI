@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JRSI - Jordan Structural Risk Index</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- jsPDF + html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-content">
+      <div class="brand">
+        <div class="brand-title">JRSI</div>
+        <div class="brand-subtitle">Jordan Structural Risk Index</div>
+      </div>
+      <div class="header-actions">
+        <button id="langBtn" class="btn btn-outline">EN</button>
+        <button id="themeBtn" class="btn btn-theme">Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">أداة تقييم الانهيار المتسلسل للمباني</h1>
+        <p class="hero-subtitle">
+          20 سؤال احترافي + نتيجة + تقرير PDF + تنبؤ AI + مرجع ACI.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-pill">AI Prediction</span>
+          <span class="meta-pill">PDF Report</span>
+          <span class="meta-pill">ACI References</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid">
+          <div class="card">
+            <h2 class="card-title">Checklist</h2>
+            <div id="checklist" class="checklist"></div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">Result</h2>
+            <div class="result">
+              <div class="result-row">
+                <span>Score</span>
+                <span id="score">0</span>
+              </div>
+              <div class="result-row">
+                <span>Risk Level</span>
+                <span id="risk">Low</span>
+              </div>
+              <div class="result-row">
+                <span>AI Confidence</span>
+                <span id="confidence">0%</span>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button id="generateReport" class="btn">Generate PDF</button>
+              <button id="resetBtn" class="btn btn-danger">Reset</button>
+            </div>
+
+            <div id="report" class="report"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section footer-links">
+      <div class="container">
+        <div class="links">
+          <a href="privacy.html" class="link">Privacy Policy</a>
+          <a href="terms.html" class="link">Terms & Conditions</a>
+        </div>
+        <div class="copyright">
+          © 2026 JRSI — Powered by ENG SUHAIB AL_ZYOUD
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
