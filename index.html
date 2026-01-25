@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structural Deformation AI</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">بسم الله الرحمن الرحيم</div>
+      <div class="header-main">
+        <h1 class="title">Structural Deformation AI</h1>
+        <p class="subtitle">AI-Assisted Preliminary Assessment for Building Collapse Risk</p>
+        <div class="author">Developed by Eng. Suhaib Al_Zyoud</div>
+      </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <button class="nav-btn" onclick="showPage('home')">Home</button>
+      <button class="nav-btn" onclick="showPage('assessment')">Assessment</button>
+      <button class="nav-btn" onclick="showPage('results')">Results</button>
+      <button class="nav-btn" onclick="showPage('policy')">Policy</button>
+    </nav>
+
+    <!-- PAGES -->
+    <main>
+      <!-- HOME -->
+      <section id="home" class="page active">
+        <div class="card">
+          <h2>About the Tool</h2>
+          <p>
+            Structural Deformation AI is a preliminary assessment tool designed to identify potential indicators of partial or progressive building collapse.
+            This tool is a decision-support aid and does not replace professional engineering inspection.
+          </p>
+          <button class="btn" onclick="startAssessment()">Start Assessment</button>
+        </div>
+      </section>
+
+      <!-- ASSESSMENT -->
+      <section id="assessment" class="page">
+        <div class="card">
+          <h2>Assessment (Step-by-Step)</h2>
+          <div id="question-area"></div>
+          <div class="actions">
+            <button class="btn" onclick="prevQuestion()">Previous</button>
+            <button class="btn" onclick="nextQuestion()">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS -->
+      <section id="results" class="page">
+        <div class="card">
+          <h2>Results</h2>
+          <div id="results-area"></div>
+          <div class="actions">
+            <button class="btn" onclick="downloadPDF()">Download PDF</button>
+            <button class="btn" onclick="showPage('home')">Back to Home</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- POLICY -->
+      <section id="policy" class="page">
+        <div class="card">
+          <h2>Privacy & Disclaimer</h2>
+          <p>
+            This tool is for preliminary assessment only. It does not replace professional structural evaluation.
+            The developer is not liable for decisions made based on the results.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      © 2026 Eng. Suhaib Al_Zyoud | All rights reserved.
+    </footer>
+  </div>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+</body>
+</html>
