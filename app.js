@@ -1,534 +1,848 @@
-const { useState } = React;
+const e = React.createElement;
 
-const questions = [
+const LANG = {
+  ar: {
+    title: "أداة تقييم السلامة الإنشائية",
+    subtitle: "تقييم أولي لحالة المبنى - الأردن",
+    switch: "English",
+    start: "ابدأ التقييم",
+    reset: "إعادة التقييم",
+    download: "تنزيل التقرير PDF",
+    section: "الأسئلة",
+    resultTitle: "النتيجة النهائية",
+    safe: "آمن حاليًا",
+    review: "يحتاج مراجعة هندسية",
+    danger: "خطر مرتفع",
+    note: "هذه أداة تقييم أولي ولا تغني عن الفحص الموقعي أو تقرير هندسي رسمي.",
+    privacy: "سياسة الخصوصية",
+    disclaimer: "إخلاء المسؤولية",
+    footer: "Developed by Eng. (Your Name) — لا يغني عن فحص هندسي رسمي",
+    q: "السؤال",
+    explain: "لماذا هذا السؤال؟",
+    impact: "كيف يؤثر على الخطر؟",
+    placeholder: "اختر إجابة"
+  },
+  en: {
+    title: "Structural Safety Assessment Tool",
+    subtitle: "Preliminary building safety assessment - Jordan",
+    switch: "عربي",
+    start: "Start Assessment",
+    reset: "Reset",
+    download: "Download PDF Report",
+    section: "Questions",
+    resultTitle: "Final Result",
+    safe: "Safe for now",
+    review: "Needs engineering review",
+    danger: "High risk",
+    note: "This is a preliminary tool and does not replace an on-site inspection or official engineering report.",
+    privacy: "Privacy Policy",
+    disclaimer: "Disclaimer",
+    footer: "Developed by Eng. (Your Name) — Not an official engineering report",
+    q: "Question",
+    explain: "Why this question?",
+    impact: "Impact on risk",
+    placeholder: "Choose an answer"
+  }
+};
+
+const QUESTIONS = [
   {
-    id: 1,
-    title: {
-      ar: "عمر المبنى",
-      en: "Building Age"
-    },
-    type: "select",
+    id: "age",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "0-10", label: { ar: "0 - 10 سنوات", en: "0 - 10 years" }, score: 0 },
-      { value: "10-30", label: { ar: "10 - 30 سنة", en: "10 - 30 years" }, score: 1 },
-      { value: "30+", label: { ar: "أكثر من 30 سنة", en: "More than 30 years" }, score: 2 }
+      { value: "low", label: { ar: "أقل من 30 سنة", en: "Less than 30 years" } },
+      { value: "mid", label: { ar: "30 - 60 سنة", en: "30 - 60 years" } },
+      { value: "high", label: { ar: "أكثر من 60 سنة", en: "More than 60 years" } }
     ],
-    explanation: {
-      ar: "العمر الأكبر يزيد احتمالية التدهور والقصور في التصميم وفقاً لمعايير ACI/ASCE.",
-      en: "Older buildings may have deterioration or outdated design per ACI/ASCE standards."
+    q: { ar: "عمر المبنى", en: "Building age" },
+    explain: {
+      ar: "المباني القديمة غالبًا بنيت وفق معايير أقل صرامة أو قد تكون تعرضت لتدهور.",
+      en: "Older buildings may have been built under less strict codes or may have deteriorated."
+    },
+    impact: {
+      ar: "يزيد العمر من احتمال تدهور الخرسانة والحديد، ويزيد مخاطر الزلازل.",
+      en: "Age increases likelihood of concrete/steel deterioration and seismic risk."
     }
   },
   {
-    id: 2,
-    title: {
-      ar: "نظام الإنشاء (خرسانة/حديد/أعمال تقليدية)",
-      en: "Structural System (Concrete/Steel/Masonry)"
-    },
-    type: "select",
+    id: "structuralSystem",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "concrete", label: { ar: "خرسانة مسلحة", en: "Reinforced Concrete" }, score: 0 },
-      { value: "steel", label: { ar: "هيكل فولاذي", en: "Steel Frame" }, score: 0 },
-      { value: "masonry", label: { ar: "أعمال تقليدية/طوب", en: "Masonry/Traditional" }, score: 2 }
+      { value: "rcFrame", label: { ar: "إطار خرساني (RC Frame)", en: "RC Frame" } },
+      { value: "shearWall", label: { ar: "جدران قص (Shear Walls)", en: "Shear Walls" } },
+      { value: "masonry", label: { ar: "حمل طوبي/مباني غير منتظمة", en: "Masonry/Irregular" } }
     ],
-    explanation: {
-      ar: "الأنظمة غير المرنة (مثل الطوب) تكون أكثر حساسية للزلازل.",
-      en: "Less ductile systems (like masonry) are more vulnerable in earthquakes."
+    q: { ar: "نظام التحمل الإنشائي", en: "Structural system" },
+    explain: {
+      ar: "أنظمة الجدران القصية غالبًا أكثر مقاومة للزلازل من الطوب أو الأنظمة غير المنتظمة.",
+      en: "Shear wall systems are generally more seismic-resistant than masonry/irregular systems."
+    },
+    impact: {
+      ar: "النظام غير المنتظم يزيد احتمالية حدوث تشوهات كبيرة أثناء الزلزال.",
+      en: "Irregular systems increase the chance of large deformations during earthquakes."
     }
   },
   {
-    id: 3,
-    title: {
-      ar: "وجود شقوق واسعة أو نزول في الأساسات",
-      en: "Wide cracks or foundation settlement"
-    },
-    type: "select",
+    id: "irregularity",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "small", label: { ar: "شقوق صغيرة (مراقبة)", en: "Small cracks (monitor)" }, score: 1 },
-      { value: "large", label: { ar: "شقوق واسعة/هبوط واضح", en: "Large cracks/settlement" }, score: 3 }
+      { value: "regular", label: { ar: "منتظم (شكل هندسي واضح)", en: "Regular" } },
+      { value: "minor", label: { ar: "لا انتظام بسيط", en: "Minor irregularity" } },
+      { value: "major", label: { ar: "لا انتظام كبير (فواصل، انحرافات)", en: "Major irregularity" } }
     ],
-    explanation: {
-      ar: "الشروخ الواسعة قد تشير لتدهور إنشائي أو هبوط في الأساسات.",
-      en: "Large cracks may indicate structural deterioration or foundation settlement."
+    q: { ar: "الانتظام الإنشائي", en: "Structural regularity" },
+    explain: {
+      ar: "الانتظام يقلل من تركيز الإجهادات ويزيد من كفاءة توزيع الأحمال.",
+      en: "Regularity reduces stress concentration and improves load distribution."
+    },
+    impact: {
+      ar: "اللا انتظام يزيد احتمال حدوث انهيار محلي أو تذبذب قوي أثناء الزلزال.",
+      en: "Irregularity increases risk of local collapse or strong vibration during earthquakes."
     }
   },
   {
-    id: 4,
-    title: {
-      ar: "هل المبنى غير منتظم (وجود شرفات كبيرة/توزيع غير متساوٍ للأعمدة)؟",
-      en: "Is the building irregular (large balconies/uneven column layout)?"
-    },
-    type: "select",
+    id: "softStory",
+    points: { low: 0, mid: 3, high: 5 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "no", label: { ar: "لا يوجد طابق لين", en: "No soft story" } },
+      { value: "possible", label: { ar: "محتمل (فتحات كبيرة/محلات)", en: "Possible (large openings)" } },
+      { value: "yes", label: { ar: "نعم يوجد طابق لين", en: "Yes, soft story exists" } }
     ],
-    explanation: {
-      ar: "اللاانتظام يزيد من احتمالية حدوث لحظات كبيرة وانهيار غير متوقع.",
-      en: "Irregularity increases risk of unexpected high moments and collapse."
+    q: { ar: "وجود طابق لين (Soft Story)", en: "Soft story presence" },
+    explain: {
+      ar: "الطابق اللين هو طابق ذو صلابة منخفضة نسبيًا مقارنة بالأعلى (مثلاً محلات كبيرة).",
+      en: "Soft story is a level with significantly lower stiffness (e.g., large shop openings)."
+    },
+    impact: {
+      ar: "يزيد احتمال انهيار الطابق السفلي خلال الزلزال.",
+      en: "Increases risk of collapse of lower story during earthquake."
     }
   },
   {
-    id: 5,
-    title: {
-      ar: "هل يوجد طابق أرضي مفتوح (Soft Story)؟",
-      en: "Is there a Soft Story (open ground floor)?"
-    },
-    type: "select",
+    id: "shearCracks",
+    points: { low: 0, mid: 3, high: 5 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 3 }
+      { value: "none", label: { ar: "لا توجد شقوق خطيرة", en: "No serious cracks" } },
+      { value: "some", label: { ar: "شقوق صغيرة/سطحية", en: "Small/surface cracks" } },
+      { value: "severe", label: { ar: "شقوق واسعة/متصلة أو انحرافات", en: "Severe cracks / distortions" } }
     ],
-    explanation: {
-      ar: "الـ Soft Story يزيد احتمال انهيار المبنى أثناء الزلزال.",
-      en: "Soft story increases collapse risk during earthquakes."
+    q: { ar: "وجود شقوق/تدهور واضح", en: "Cracks / visible deterioration" },
+    explain: {
+      ar: "شقوق القص أو التصدعات الكبيرة تدل على إجهادات عالية أو ضعف في التسليح.",
+      en: "Shear cracks or large cracks indicate high stress or weak reinforcement."
+    },
+    impact: {
+      ar: "تزيد من احتمال فقدان القدرة التحملية في الأعمدة أو الكمرات.",
+      en: "Increases risk of losing load capacity in columns/beams."
     }
   },
   {
-    id: 6,
-    title: {
-      ar: "هل يوجد تآكل في الحديد أو صدأ واضح؟",
-      en: "Is there corrosion or rust on reinforcement?"
-    },
-    type: "select",
+    id: "columnSpacing",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "good", label: { ar: "توزيع أعمدة جيد (مسافات منتظمة)", en: "Good column distribution" } },
+      { value: "uneven", label: { ar: "توزيع غير منتظم", en: "Uneven distribution" } },
+      { value: "sparse", label: { ar: "أعمدة قليلة/مسافات كبيرة", en: "Sparse columns" } }
     ],
-    explanation: {
-      ar: "الصدأ يقلل قدرة الحديد على التحمل ويضعف الالتصاق مع الخرسانة.",
-      en: "Corrosion reduces reinforcement strength and bond with concrete."
+    q: { ar: "توزيع الأعمدة", en: "Column distribution" },
+    explain: {
+      ar: "توزيع الأعمدة يؤثر على قدرة المبنى على مقاومة الأحمال الأفقية.",
+      en: "Column distribution affects the building's ability to resist lateral loads."
+    },
+    impact: {
+      ar: "التوزيع السيء يزيد من تركيز الأحمال ويزيد احتمالية الانهيار.",
+      en: "Poor distribution increases load concentration and collapse risk."
     }
   },
   {
-    id: 7,
-    title: {
-      ar: "هل يوجد تجاويف أو تساقط في الخرسانة (Spalling)؟",
-      en: "Is there concrete spalling or delamination?"
-    },
-    type: "select",
+    id: "beamDepth",
+    points: { low: 0, mid: 1, high: 3 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "adequate", label: { ar: "عمق كمرات مناسب", en: "Adequate beam depth" } },
+      { value: "low", label: { ar: "عمق قليل نسبيًا", en: "Low depth" } },
+      { value: "veryLow", label: { ar: "عمق صغير جدًا", en: "Very low depth" } }
     ],
-    explanation: {
-      ar: "تساقط الخرسانة قد يعني ضعف الغطاء الخرساني وتدهور مقاومة القص.",
-      en: "Spalling indicates cover loss and reduced shear capacity."
+    q: { ar: "عمق الكمرات (Beam Depth)", en: "Beam depth" },
+    explain: {
+      ar: "الكمرات العميقة عادةً أفضل في مقاومة الانحناء والقص.",
+      en: "Deeper beams usually resist bending and shear better."
+    },
+    impact: {
+      ar: "العمق القليل يزيد احتمال فشل القص أو الانحناء.",
+      en: "Low depth increases risk of shear or bending failure."
     }
   },
   {
-    id: 8,
-    title: {
-      ar: "هل يوجد انحراف واضح في الجدران أو الأعمدة؟",
-      en: "Is there noticeable leaning of walls/columns?"
-    },
-    type: "select",
+    id: "rebarExposure",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 3 }
+      { value: "no", label: { ar: "لا يوجد تعرض حديد", en: "No exposed rebar" } },
+      { value: "minor", label: { ar: "تعرض بسيط", en: "Minor exposure" } },
+      { value: "severe", label: { ar: "تعرض واضح/صدأ شديد", en: "Severe exposure / rust" } }
     ],
-    explanation: {
-      ar: "الانحراف قد يشير لتدهور في العناصر الحاملة أو هبوط في الأساسات.",
-      en: "Leaning may indicate structural failure or foundation settlement."
+    q: { ar: "تعرض الحديد/الصدأ", en: "Rebar exposure / corrosion" },
+    explain: {
+      ar: "تعرض الحديد للصدأ يقلل من مقاومته ويزيد خطر التآكل.",
+      en: "Corrosion reduces steel strength and increases deterioration."
+    },
+    impact: {
+      ar: "يقلل قدرة العناصر الخرسانية على التحمل ويزيد خطر الفشل.",
+      en: "Reduces element capacity and increases failure risk."
     }
   },
   {
-    id: 9,
-    title: {
-      ar: "هل يوجد جدران حاملة غير مكتملة أو تم تعديلها؟",
-      en: "Are there modified or removed load-bearing walls?"
-    },
-    type: "select",
+    id: "foundation",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "good", label: { ar: "أساس قوي ومناسب", en: "Good foundation" } },
+      { value: "unknown", label: { ar: "غير معروف/مشتبه", en: "Unknown / suspected issues" } },
+      { value: "poor", label: { ar: "أساس ضعيف/تصدعات", en: "Poor foundation / cracks" } }
     ],
-    explanation: {
-      ar: "تعديل الجدران الحاملة يغير توزيع الأحمال وقد يسبب فشل إنشائي.",
-      en: "Modifying load-bearing walls changes load paths and may cause failure."
+    q: { ar: "حالة الأساس", en: "Foundation condition" },
+    explain: {
+      ar: "الأساس هو نقطة انتقال الأحمال إلى الأرض، وأي تدهور يؤثر على المبنى ككل.",
+      en: "Foundation transfers loads to soil; deterioration affects the whole building."
+    },
+    impact: {
+      ar: "تدهور الأساس يزيد خطر هبوط أو انحناء أو انهيار.",
+      en: "Foundation issues increase settlement or collapse risk."
     }
   },
   {
-    id: 10,
-    title: {
-      ar: "هل يوجد شدة (Diaphragm) غير مكتملة أو تسريبات في السقف؟",
-      en: "Is the roof diaphragm incomplete or leaking?"
-    },
-    type: "select",
+    id: "waterDamage",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "none", label: { ar: "لا يوجد تسربات", en: "No water damage" } },
+      { value: "some", label: { ar: "تسربات بسيطة", en: "Minor leaks" } },
+      { value: "severe", label: { ar: "تسربات كبيرة/تآكل", en: "Severe leaks / damage" } }
     ],
-    explanation: {
-      ar: "الديابغرام ينقل القوى الزلزالية إلى العناصر الرأسية، وأي ضعف فيه يزيد المخاطر.",
-      en: "Diaphragm transfers seismic forces; weakness increases risk."
+    q: { ar: "تسربات/رطوبة", en: "Water leaks / moisture" },
+    explain: {
+      ar: "الماء يضعف الخرسانة ويسبب تآكل الحديد مع الوقت.",
+      en: "Water weakens concrete and corrodes steel over time."
+    },
+    impact: {
+      ar: "يزيد تدهور العناصر ويقلل قدرة التحمل.",
+      en: "Increases deterioration and reduces load capacity."
     }
   },
   {
-    id: 11,
-    title: {
-      ar: "هل يوجد ارتفاعات غير متساوية بين الطوابق (مثل سقف مرتفع في طابق واحد)؟",
-      en: "Are floor heights irregular?"
-    },
-    type: "select",
+    id: "floorDiaphragm",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "rigid", label: { ar: "أرضية/سقف صلب (Diaphragm)", en: "Rigid floor/roof" } },
+      { value: "semi", label: { ar: "نصف صلب", en: "Semi-rigid" } },
+      { value: "flexible", label: { ar: "مرن جدًا", en: "Flexible" } }
     ],
-    explanation: {
-      ar: "عدم انتظام الارتفاعات يزيد لحظات القص ويؤثر على توزيع القوى.",
-      en: "Irregular heights increase shear moments and force distribution issues."
+    q: { ar: "صلابة السقف/الأرضية (Diaphragm)", en: "Floor/roof diaphragm stiffness" },
+    explain: {
+      ar: "السقف الصلب يوزع الأحمال الجانبية بشكل أفضل على الأعمدة والجدران.",
+      en: "Rigid diaphragm distributes lateral loads better."
+    },
+    impact: {
+      ar: "السقف المرن يزيد تركيز الأحمال ويزيد احتمال الانهيار.",
+      en: "Flexible diaphragm increases load concentration and collapse risk."
     }
   },
   {
-    id: 12,
-    title: {
-      ar: "هل المبنى يحتوي على أعمدة أو جدران قصيرة (Short Columns)؟",
-      en: "Are there short columns?"
-    },
-    type: "select",
+    id: "retrofitting",
+    points: { low: 0, mid: 1, high: 3 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "none", label: { ar: "لا يوجد تدعيم", en: "No retrofitting" } },
+      { value: "partial", label: { ar: "تدعيم جزئي", en: "Partial retrofitting" } },
+      { value: "full", label: { ar: "تدعيم كامل/معتمد", en: "Full retrofitting" } }
     ],
-    explanation: {
-      ar: "الأعمدة القصيرة تتعرض لقص أكبر في الزلازل وقد تفشل بشكل مفاجئ.",
-      en: "Short columns experience higher shear in earthquakes and may fail suddenly."
+    q: { ar: "هل تم تدعيم المبنى؟", en: "Has the building been retrofitted?" },
+    explain: {
+      ar: "التدعيم يقلل المخاطر إذا تم وفق معايير هندسية صحيحة.",
+      en: "Retrofitting reduces risk if done according to engineering standards."
+    },
+    impact: {
+      ar: "التدعيم الكامل يقلل المخاطر بشكل كبير.",
+      en: "Full retrofitting significantly reduces risk."
     }
   },
   {
-    id: 13,
-    title: {
-      ar: "هل يوجد تقوس أو تشوه في الكمرات؟",
-      en: "Is there beam sagging or deformation?"
-    },
-    type: "select",
+    id: "storyCount",
+    points: { low: 0, mid: 1, high: 2 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "low", label: { ar: "1-3 طوابق", en: "1-3 stories" } },
+      { value: "mid", label: { ar: "4-7 طوابق", en: "4-7 stories" } },
+      { value: "high", label: { ar: "8+ طوابق", en: "8+ stories" } }
     ],
-    explanation: {
-      ar: "تشوه الكمرات قد يدل على إجهاد زائد أو ضعف في التسليح.",
-      en: "Beam deformation indicates overload or insufficient reinforcement."
+    q: { ar: "عدد الطوابق", en: "Number of stories" },
+    explain: {
+      ar: "كلما زاد عدد الطوابق زادت الأحمال الأفقية والقص.",
+      en: "More stories increase lateral loads and shear demands."
+    },
+    impact: {
+      ar: "يزيد احتمال حدوث إجهادات أعلى في الأعمدة والجدران.",
+      en: "Increases stress on columns and walls."
     }
   },
   {
-    id: 14,
-    title: {
-      ar: "هل يوجد تسرب مائي أو رطوبة قوية في الأساسات أو الجدران؟",
-      en: "Is there severe water leakage or moisture?"
-    },
-    type: "select",
+    id: "infills",
+    points: { low: 0, mid: 1, high: 3 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "consistent", label: { ar: "إغلاقات متسقة (Infills)", en: "Consistent infills" } },
+      { value: "mixed", label: { ar: "إغلاقات مختلطة", en: "Mixed infills" } },
+      { value: "none", label: { ar: "لا يوجد/غير متسق", en: "None/inconsistent" } }
     ],
-    explanation: {
-      ar: "الرطوبة تؤدي لتدهور الخرسانة والحديد وتقليل مقاومتها.",
-      en: "Moisture deteriorates concrete and reinforcement strength."
+    q: { ar: "إغلاقات الجدران (Infills)", en: "Wall infills" },
+    explain: {
+      ar: "الإغلاقات غير المتسقة تسبب اختلافات في الصلابة بين الطوابق.",
+      en: "Inconsistent infills create stiffness irregularities."
+    },
+    impact: {
+      ar: "يزيد عدم الانتظام ويؤثر على توزيع الأحمال.",
+      en: "Increases irregularity and affects load distribution."
     }
   },
   {
-    id: 15,
-    title: {
-      ar: "هل يوجد طابق إضافي غير مرخص أو إضافة علوية؟",
-      en: "Is there an unlicensed additional floor?"
-    },
-    type: "select",
+    id: "beamColumnJoints",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "good", label: { ar: "وصلات جيدة/ممتازة", en: "Good joints" } },
+      { value: "weak", label: { ar: "وصلات ضعيفة/مشتبه", en: "Weak/suspected joints" } },
+      { value: "poor", label: { ar: "وصلات سيئة/تآكل", en: "Poor joints" } }
     ],
-    explanation: {
-      ar: "الإضافات تزيد الأحمال على الأعمدة والأساسات دون تصميم مناسب.",
-      en: "Additions increase loads without proper structural design."
+    q: { ar: "حالة وصلات الكمرات بالأعمدة", en: "Beam-column joint condition" },
+    explain: {
+      ar: "الوصلة هي نقطة انتقال القوى، وأي ضعف فيها قد يسبب فشلًا سريعًا.",
+      en: "Joint is a load transfer point; weakness can cause sudden failure."
+    },
+    impact: {
+      ar: "ضعف الوصلات يزيد خطر انهيار الهيكل.",
+      en: "Weak joints increase collapse risk."
     }
   },
   {
-    id: 16,
-    title: {
-      ar: "هل يوجد اهتزاز أو صوت غير طبيعي أثناء مرور السيارات أو الرياح؟",
-      en: "Is there unusual vibration/noise during wind/traffic?"
-    },
-    type: "select",
+    id: "roofType",
+    points: { low: 0, mid: 1, high: 2 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "slab", label: { ar: "سقف بلاطة خرسانية", en: "Concrete slab roof" } },
+      { value: "light", label: { ar: "سقف خفيف (معدن/خشب)", en: "Light roof (metal/wood)" } },
+      { value: "heavy", label: { ar: "سقف ثقيل (حجر/طابوق)", en: "Heavy roof (stone/brick)" } }
     ],
-    explanation: {
-      ar: "الاهتزاز قد يشير لضعف في الاتصالات بين العناصر أو ضعف في القواعد.",
-      en: "Vibration may indicate weak connections or foundation issues."
+    q: { ar: "نوع السقف", en: "Roof type" },
+    explain: {
+      ar: "الأسقف الثقيلة تزيد الأحمال على الأعمدة والجدران أثناء الزلزال.",
+      en: "Heavy roofs increase loads on columns/walls during earthquakes."
+    },
+    impact: {
+      ar: "يزيد احتمال انهيار بسبب وزن أعلى وتذبذب أكبر.",
+      en: "Increases collapse risk due to higher mass and vibration."
     }
   },
   {
-    id: 17,
-    title: {
-      ar: "هل تم تعديل فتحات كبيرة في الجدران الحاملة؟",
-      en: "Were large openings made in load-bearing walls?"
-    },
-    type: "select",
+    id: "parkingBasement",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "no", label: { ar: "لا يوجد قبو/موقف", en: "No basement/parking" } },
+      { value: "small", label: { ar: "قبو صغير", en: "Small basement" } },
+      { value: "large", label: { ar: "قبو كبير/مواقف واسعة", en: "Large basement/parking" } }
     ],
-    explanation: {
-      ar: "الفتحات الكبيرة تقلل من قدرة الجدران على تحمل القوى الجانبية.",
-      en: "Large openings reduce lateral load capacity."
+    q: { ar: "وجود قبو/موقف", en: "Basement/parking presence" },
+    explain: {
+      ar: "الأقبية الكبيرة قد تكون طوابق لينة أو تحتاج تدعيم إضافي.",
+      en: "Large basements can be soft stories or need extra reinforcement."
+    },
+    impact: {
+      ar: "يزيد خطر الانهيار في الطابق السفلي.",
+      en: "Increases risk of collapse in lower story."
     }
   },
   {
-    id: 18,
-    title: {
-      ar: "هل يوجد خرسانة ضعيفة أو تساقط في الجدران؟",
-      en: "Is there weak concrete or wall spalling?"
-    },
-    type: "select",
+    id: "overload",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "no", label: { ar: "لا يوجد تحميل زائد", en: "No overload" } },
+      { value: "some", label: { ar: "تحميل زائد بسيط", en: "Minor overload" } },
+      { value: "high", label: { ar: "تحميل زائد كبير", en: "High overload" } }
     ],
-    explanation: {
-      ar: "الخرسانة الضعيفة تقلل من مقاومة الانضغاط والقص.",
-      en: "Weak concrete reduces compression and shear resistance."
+    q: { ar: "وجود تحميل زائد (إضافات/تغير استخدام)", en: "Overload (additions/change of use)" },
+    explain: {
+      ar: "إضافة طوابق أو تغيير الاستخدام يزيد الأحمال على الهيكل.",
+      en: "Adding floors or changing use increases structural loads."
+    },
+    impact: {
+      ar: "يزيد إجهاد الأعمدة والكمرات ويقلل عامل الأمان.",
+      en: "Increases stress and reduces safety margin."
     }
   },
   {
-    id: 19,
-    title: {
-      ar: "هل يوجد أي أعمال بناء جديدة مجاورة تؤثر على الأساسات؟",
-      en: "Is there new adjacent construction affecting foundations?"
-    },
-    type: "select",
+    id: "beamCrackType",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "none", label: { ar: "لا توجد شقوق في الكمرات", en: "No beam cracks" } },
+      { value: "hairline", label: { ar: "شقوق دقيقة", en: "Hairline cracks" } },
+      { value: "wide", label: { ar: "شقوق واسعة/أفقية", en: "Wide/horizontal cracks" } }
     ],
-    explanation: {
-      ar: "الأعمال المجاورة قد تسبب هزات أو هبوط في التربة.",
-      en: "Adjacent construction may cause vibrations or soil settlement."
+    q: { ar: "شقوق الكمرات", en: "Beam cracks" },
+    explain: {
+      ar: "شقوق أفقية أو واسعة قد تشير إلى قص/انحناء مفرط أو ضعف تسليح.",
+      en: "Wide/horizontal cracks may indicate shear/bending failure or weak reinforcement."
+    },
+    impact: {
+      ar: "تزيد خطر فشل القص أو الانحناء في الكمرات.",
+      en: "Increases risk of shear or bending failure."
     }
   },
   {
-    id: 20,
-    title: {
-      ar: "هل يوجد نظام إنشائي غير موثق أو بدون مخططات؟",
-      en: "Is the structural system undocumented or without drawings?"
-    },
-    type: "select",
+    id: "columnCrackType",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 1 }
+      { value: "none", label: { ar: "لا توجد شقوق في الأعمدة", en: "No column cracks" } },
+      { value: "vertical", label: { ar: "شقوق رأسية صغيرة", en: "Small vertical cracks" } },
+      { value: "shear", label: { ar: "شقوق قص/مائلة واسعة", en: "Wide shear/diagonal cracks" } }
     ],
-    explanation: {
-      ar: "غياب المخططات يزيد من صعوبة تقييم السلامة بشكل دقيق.",
-      en: "Lack of drawings makes safety assessment difficult."
+    q: { ar: "شقوق الأعمدة", en: "Column cracks" },
+    explain: {
+      ar: "شقوق القص في الأعمدة هي من أخطر علامات الفشل.",
+      en: "Shear cracks in columns are a serious failure sign."
+    },
+    impact: {
+      ar: "تزيد احتمال انهيار الأعمدة أثناء الزلزال.",
+      en: "Increases risk of column collapse."
     }
   },
   {
-    id: 21,
-    title: {
-      ar: "هل يوجد سحب في الأسقف أو كمرات غير مستوية؟",
-      en: "Are there sagging slabs or uneven beams?"
-    },
-    type: "select",
+    id: "dampness",
+    points: { low: 0, mid: 1, high: 3 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "none", label: { ar: "لا يوجد رطوبة", en: "No dampness" } },
+      { value: "some", label: { ar: "رطوبة بسيطة", en: "Minor dampness" } },
+      { value: "high", label: { ar: "رطوبة قوية/تسربات مستمرة", en: "Strong dampness / leaks" } }
     ],
-    explanation: {
-      ar: "الانحناء قد يدل على تحميل زائد أو ضعف في التسليح.",
-      en: "Sagging indicates overload or insufficient reinforcement."
+    q: { ar: "الرطوبة داخل المبنى", en: "Indoor dampness" },
+    explain: {
+      ar: "الرطوبة تؤثر على الخرسانة وتزيد تآكل الحديد.",
+      en: "Dampness affects concrete and increases steel corrosion."
+    },
+    impact: {
+      ar: "تقلل مقاومة العناصر وتزيد مخاطر التدهور.",
+      en: "Reduces element capacity and increases deterioration."
     }
   },
   {
-    id: 22,
-    title: {
-      ar: "هل يوجد تشققات رأسية في الأعمدة (Diagonal cracks)؟",
-      en: "Are there diagonal cracks in columns?"
-    },
-    type: "select",
+    id: "earthquakeHistory",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 3 }
+      { value: "none", label: { ar: "لم يتعرض لهزات قوية", en: "No strong shaking history" } },
+      { value: "minor", label: { ar: "هزات خفيفة", en: "Minor shaking" } },
+      { value: "major", label: { ar: "هزات قوية/تأثير واضح", en: "Strong shaking / visible impact" } }
     ],
-    explanation: {
-      ar: "التشققات القطرية قد تشير لقص شديد أو فشل إنشائي.",
-      en: "Diagonal cracks may indicate shear failure or severe stress."
+    q: { ar: "تاريخ المبنى مع الزلازل", en: "Earthquake history" },
+    explain: {
+      ar: "التعرض لهزات قوية قد يسبب تدهورًا غير مرئي في العناصر.",
+      en: "Strong shaking can cause hidden deterioration."
+    },
+    impact: {
+      ar: "يزيد احتمال وجود تلف داخلي وخطر انهيار.",
+      en: "Increases risk of hidden damage and collapse."
     }
   },
   {
-    id: 23,
-    title: {
-      ar: "هل يوجد تباين كبير في ارتفاعات الأعمدة (مثل عمود أقصر بكثير)؟",
-      en: "Are there large variations in column heights?"
-    },
-    type: "select",
+    id: "occupancy",
+    points: { low: 0, mid: 1, high: 2 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "residential", label: { ar: "سكني", en: "Residential" } },
+      { value: "mixed", label: { ar: "مختلط (سكني + تجاري)", en: "Mixed (residential+commercial)" } },
+      { value: "commercial", label: { ar: "تجاري/مؤسسات", en: "Commercial/Institutional" } }
     ],
-    explanation: {
-      ar: "التباين في الارتفاعات يسبب تركيز قص في الأعمدة القصيرة.",
-      en: "Height variation causes shear concentration in short columns."
+    q: { ar: "نوع الاستخدام", en: "Occupancy type" },
+    explain: {
+      ar: "الاستخدام التجاري قد يزيد التحميل ويقلل مرونة التعديل.",
+      en: "Commercial use may increase load and reduce flexibility."
+    },
+    impact: {
+      ar: "يزيد احتمال التحميل الزائد وارتفاع المخاطر.",
+      en: "Increases overload risk and hazards."
     }
   },
   {
-    id: 24,
-    title: {
-      ar: "هل يوجد شدة حديد ضعيفة أو هوك غير كافٍ حول الأعمدة؟",
-      en: "Is stirrup/hoop reinforcement insufficient?"
-    },
-    type: "select",
+    id: "maintenance",
+    points: { low: 0, mid: 1, high: 3 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "good", label: { ar: "صيانة جيدة", en: "Good maintenance" } },
+      { value: "poor", label: { ar: "صيانة ضعيفة", en: "Poor maintenance" } },
+      { value: "none", label: { ar: "لا توجد صيانة", en: "No maintenance" } }
     ],
-    explanation: {
-      ar: "الشدات غير الكافية تزيد خطر فشل القص في الأعمدة (ACI 318).",
-      en: "Insufficient stirrups increase shear failure risk (ACI 318)."
+    q: { ar: "حالة الصيانة", en: "Maintenance condition" },
+    explain: {
+      ar: "الصيانة تقلل من التدهور وتطيل عمر المبنى.",
+      en: "Maintenance reduces deterioration and extends building life."
+    },
+    impact: {
+      ar: "الصيانة الضعيفة تزيد خطر التدهور السريع.",
+      en: "Poor maintenance increases rapid deterioration risk."
     }
   },
   {
-    id: 25,
-    title: {
-      ar: "هل تم تنفيذ المبنى بدون إشراف هندسي أو بدون ختم/مراجعة؟",
-      en: "Was the building constructed without engineering supervision?"
-    },
-    type: "select",
+    id: "columnsSize",
+    points: { low: 0, mid: 2, high: 4 },
     options: [
-      { value: "no", label: { ar: "لا", en: "No" }, score: 0 },
-      { value: "yes", label: { ar: "نعم", en: "Yes" }, score: 2 }
+      { value: "adequate", label: { ar: "أعمدة بأبعاد مناسبة", en: "Adequate column size" } },
+      { value: "small", label: { ar: "أعمدة صغيرة نسبيًا", en: "Relatively small columns" } },
+      { value: "verySmall", label: { ar: "أعمدة صغيرة جدًا", en: "Very small columns" } }
     ],
-    explanation: {
-      ar: "الإنشاء بدون إشراف يزيد احتمال وجود أخطاء تنفيذية كبيرة.",
-      en: "Construction without supervision increases risk of major execution errors."
+    q: { ar: "أبعاد الأعمدة", en: "Column dimensions" },
+    explain: {
+      ar: "الأعمدة الصغيرة قد لا تتحمل القص والانحناء المطلوب في الزلازل.",
+      en: "Small columns may not resist required shear/bending in earthquakes."
+    },
+    impact: {
+      ar: "يزيد خطر فشل الأعمدة وانهيار الهيكل.",
+      en: "Increases column failure and collapse risk."
+    }
+  },
+  {
+    id: "slope",
+    points: { low: 0, mid: 2, high: 4 },
+    options: [
+      { value: "flat", label: { ar: "أرض مستوية", en: "Flat ground" } },
+      { value: "slight", label: { ar: "انحدار بسيط", en: "Slight slope" } },
+      { value: "steep", label: { ar: "انحدار شديد", en: "Steep slope" } }
+    ],
+    q: { ar: "نوع الأرض/الانحدار", en: "Ground type / slope" },
+    explain: {
+      ar: "الانحدار الشديد قد يسبب انزلاق أرضي أو ضعف في الأساس.",
+      en: "Steep slopes can cause landslides or foundation issues."
+    },
+    impact: {
+      ar: "يزيد خطر هبوط الأساس أو انزلاق التربة.",
+      en: "Increases foundation settlement or soil slip risk."
+    }
+  },
+  {
+    id: "constructionQuality",
+    points: { low: 0, mid: 2, high: 4 },
+    options: [
+      { value: "good", label: { ar: "جودة بناء جيدة", en: "Good construction quality" } },
+      { value: "average", label: { ar: "جودة متوسطة", en: "Average quality" } },
+      { value: "poor", label: { ar: "جودة ضعيفة", en: "Poor quality" } }
+    ],
+    q: { ar: "جودة التنفيذ", en: "Construction quality" },
+    explain: {
+      ar: "التنفيذ الجيد يضمن تماسك العناصر وتسليح صحيح.",
+      en: "Good execution ensures proper reinforcement and element integrity."
+    },
+    impact: {
+      ar: "الجودة الضعيفة تزيد احتمالية عيوب إنشائية وخطر انهيار.",
+      en: "Poor quality increases construction defects and collapse risk."
+    }
+  },
+  {
+    id: "doorsWindows",
+    points: { low: 0, mid: 1, high: 2 },
+    options: [
+      { value: "balanced", label: { ar: "فتحات متوازنة", en: "Balanced openings" } },
+      { value: "large", label: { ar: "فتحات كبيرة/محلات", en: "Large openings/shops" } },
+      { value: "many", label: { ar: "فتحات كثيرة غير متوازنة", en: "Many unbalanced openings" } }
+    ],
+    q: { ar: "حجم/توزيع الفتحات", en: "Openings size/distribution" },
+    explain: {
+      ar: "الفتحات الكبيرة تقلل من صلابة الجدران وتزيد عدم الانتظام.",
+      en: "Large openings reduce wall stiffness and increase irregularity."
+    },
+    impact: {
+      ar: "يزيد خطر الانهيار في الطوابق التي بها فتحات كبيرة.",
+      en: "Increases collapse risk in floors with large openings."
+    }
+  },
+  {
+    id: "staircase",
+    points: { low: 0, mid: 1, high: 2 },
+    options: [
+      { value: "good", label: { ar: "سلم متصل ومتين", en: "Solid connected staircase" } },
+      { value: "weak", label: { ar: "سلم ضعيف/غير متصل جيدًا", en: "Weak/unconnected staircase" } },
+      { value: "none", label: { ar: "لا يوجد سلم مناسب", en: "No proper staircase" } }
+    ],
+    q: { ar: "حالة السلم/المخارج", en: "Staircase / exits condition" },
+    explain: {
+      ar: "السلم جزء مهم للإنقاذ ويعكس جودة التنفيذ.",
+      en: "Stairs are essential for evacuation and reflect construction quality."
+    },
+    impact: {
+      ar: "السلم الضعيف يزيد خطر الإصابة وصعوبة الإخلاء.",
+      en: "Weak stairs increase injury risk and evacuation difficulty."
+    }
+  },
+  {
+    id: "storageOnRoof",
+    points: { low: 0, mid: 2, high: 4 },
+    options: [
+      { value: "none", label: { ar: "لا يوجد تحميل على السطح", en: "No roof storage" } },
+      { value: "some", label: { ar: "تخزين خفيف", en: "Light storage" } },
+      { value: "heavy", label: { ar: "تخزين ثقيل/ماء/أشياء كبيرة", en: "Heavy storage" } }
+    ],
+    q: { ar: "تحميل على السطح", en: "Roof storage / load" },
+    explain: {
+      ar: "التحميل الثقيل يزيد الكتلة ويزيد تأثير الزلزال.",
+      en: "Heavy roof load increases mass and seismic impact."
+    },
+    impact: {
+      ar: "يزيد الاهتزاز ويقلل السلامة أثناء الزلزال.",
+      en: "Increases vibration and reduces safety."
     }
   }
 ];
 
-function App() {
-  const [lang, setLang] = useState("ar");
-  const [answers, setAnswers] = useState({});
-  const [result, setResult] = useState(null);
-
-  const setAnswer = (id, value) => {
-    setAnswers((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const calculate = () => {
-    let total = 0;
-    for (const q of questions) {
-      const ans = answers[q.id];
-      const option = q.options.find((o) => o.value === ans);
-      total += option ? option.score : 0;
-    }
-
-    let status, message, recommendations;
-    if (total <= 4) {
-      status = "green";
-      message = lang === "ar" ? "🟢 آمن حاليًا" : "🟢 Safe for now";
-      recommendations = lang === "ar"
-        ? "المبنى يبدو آمنًا بناءً على الإجابات الحالية. راقب أي شقوق جديدة وراجع مهندس إذا حصلت تغييرات."
-        : "Building seems safe based on current answers. Monitor for new cracks and consult an engineer if changes occur.";
-    } else if (total <= 10) {
-      status = "yellow";
-      message = lang === "ar" ? "🟡 يحتاج مراجعة هندسية" : "🟡 Needs engineering review";
-      recommendations = lang === "ar"
-        ? "يوجد مؤشرات قد تستدعي فحصًا هندسيًا. راجع مكتب هندسي للتقييم الميداني."
-        : "There are indicators that require an engineering field inspection.";
-    } else {
-      status = "red";
-      message = lang === "ar" ? "🔴 خطر مرتفع" : "🔴 High risk";
-      recommendations = lang === "ar"
-        ? "يوجد خطر مرتفع. تجنب الإقامة في المبنى واتصل بمهندس مختص فورًا."
-        : "High risk. Avoid occupancy and contact a qualified engineer immediately.";
-    }
-
-    setResult({ total, status, message, recommendations });
-  };
-
-  const reset = () => {
-    setAnswers({});
-    setResult(null);
-  };
-
-  return React.createElement(
-    "div",
-    { className: "container" },
-    React.createElement(
-      "header",
-      { className: "header" },
-      React.createElement("h1", null, lang === "ar" ? "أداة تقييم السلامة الإنشائية" : "Structural Safety Assessment Tool"),
-      React.createElement(
-        "p",
-        null,
-        lang === "ar"
-          ? "تقييم أولي للسلامة الإنشائية للمباني في الأردن. لا يغني عن فحص موقعي."
-          : "Preliminary assessment for building safety in Jordan. Not a substitute for field inspection."
-      )
-    ),
-
-    React.createElement(
-      "div",
-      { className: "card" },
-      React.createElement(
-        "div",
-        { style: { display: "flex", justifyContent: "space-between", alignItems: "center" } },
-        React.createElement("h2", null, lang === "ar" ? "الأسئلة" : "Questions"),
-        React.createElement(
-          "select",
-          { value: lang, onChange: (e) => setLang(e.target.value) },
-          React.createElement("option", { value: "ar" }, "العربية"),
-          React.createElement("option", { value: "en" }, "English")
-        )
-      ),
-
-      questions.map((q) =>
-        React.createElement(
-          "div",
-          { className: "question", key: q.id },
-          React.createElement("label", null, lang === "ar" ? q.title.ar : q.title.en),
-          React.createElement(
-            "select",
-            { value: answers[q.id] || "", onChange: (e) => setAnswer(q.id, e.target.value) },
-            React.createElement("option", { value: "" }, lang === "ar" ? "اختر" : "Select"),
-            q.options.map((o) =>
-              React.createElement("option", { key: o.value, value: o.value }, lang === "ar" ? o.label.ar : o.label.en)
-            )
-          ),
-          React.createElement("small", null, lang === "ar" ? q.explanation.ar : q.explanation.en)
-        )
-      ),
-
-      React.createElement(
-        "button",
-        { className: "btn btn-primary", onClick: calculate },
-        lang === "ar" ? "احسب" : "Calculate"
-      ),
-      React.createElement(
-        "button",
-        { className: "btn btn-secondary", onClick: reset },
-        lang === "ar" ? "إعادة" : "Reset"
-      ),
-
-      result &&
-        React.createElement(
-          "div",
-          { className: `result ${result.status}` },
-          React.createElement("h3", null, result.message),
-          React.createElement("p", null, lang === "ar" ? `المجموع: ${result.total}` : `Score: ${result.total}`),
-          React.createElement("p", null, result.recommendations)
-        )
-    ),
-
-    React.createElement(
-      "footer",
-      { className: "footer" },
-      lang === "ar"
-        ? "Developed by Eng. [اسمك] — أداة تقييم أولي فقط."
-        : "Developed by Eng. [Your Name] — Preliminary assessment tool only."
-    )
-  );
+// scoring
+function calculateScore(answers) {
+  let total = 0;
+  for (const q of QUESTIONS) {
+    const val = answers[q.id];
+    if (!val) continue;
+    total += q.points[val] ?? 0;
+  }
+  return total;
 }
 
-ReactDOM.render(React.createElement(App), document.getElementById("root"));
+function getResult(score) {
+  if (score <= 20) return { level: "good", label: LANG[lang].safe };
+  if (score <= 45) return { level: "warn", label: LANG[lang].review };
+  return { level: "bad", label: LANG[lang].danger };
+}
+
+function getRecommendations(level) {
+  if (level === "good") {
+    return {
+      ar: "المبنى يبدو آمنًا مبدئيًا. استمر في الصيانة الدورية وراقب الشقوق أو التغيرات.",
+      en: "The building appears safe for now. Continue regular maintenance and monitor cracks or changes."
+    };
+  }
+  if (level === "warn") {
+    return {
+      ar: "يوجد مؤشرات تستدعي مراجعة هندسية. يفضل فحص ميداني وتقييم مفصل من مكتب هندسي.",
+      en: "There are indicators that require an engineering review. A field inspection and detailed evaluation are recommended."
+    };
+  }
+  return {
+    ar: "المبنى في خطر مرتفع. يجب التوقف عن الاستخدام وتقييم عاجل من مهندس مختص وتدعيم فوري إذا لزم.",
+    en: "The building is at high risk. Stop use and get urgent assessment by a qualified engineer and retrofit if needed."
+  };
+}
+
+let lang = "ar";
+
+function App() {
+  const [state, setState] = React.useState(() => {
+    const saved = localStorage.getItem("jsrai_state");
+    return saved ? JSON.parse(saved) : { answers: {}, showResult: false };
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem("jsrai_state", JSON.stringify(state));
+  }, [state]);
+
+  const t = LANG[lang];
+
+  const score = calculateScore(state.answers);
+  const result = getResult(score);
+  const rec = getRecommendations(result.level);
+
+  function setAnswer(qId, value) {
+    setState(prev => ({
+      ...prev,
+      answers: { ...prev.answers, [qId]: value }
+    }));
+  }
+
+  function reset() {
+    setState({ answers: {}, showResult: false });
+  }
+
+  function downloadPDF() {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(lang === "ar" ? "تقرير تقييم السلامة الإنشائية" : "Structural Safety Report", 14, 20);
+    doc.setFontSize(12);
+    doc.text(lang === "ar" ? "ملخص" : "Summary", 14, 34);
+    doc.text(
+      lang === "ar"
+        ? `النتيجة: ${result.label}`
+        : `Result: ${result.label}`,
+      14,
+      42
+    );
+    doc.text(
+      lang === "ar"
+        ? `الدرجة: ${score}`
+        : `Score: ${score}`,
+      14,
+      50
+    );
+    doc.text(lang === "ar" ? "توصيات:" : "Recommendations:", 14, 62);
+    doc.setFontSize(11);
+    doc.text(doc.splitTextToSize(rec[lang], 180), 14, 70);
+
+    doc.setFontSize(10);
+    doc.text(
+      lang === "ar"
+        ? "هذا التقرير لا يعد تقريرًا هندسيًا رسميًا ولا يغني عن الفحص الموقعي."
+        : "This report is not an official engineering report and does not replace an on-site inspection.",
+      14,
+      260
+    );
+
+    doc.save("JSRAI_Report.pdf");
+  }
+
+  return e("div", { className: "container" }, [
+    e("div", { className: "header", key: "header" }, [
+      e("div", { className: "brand" }, [
+        e("h1", { key: "h1" }, t.title),
+        e("p", { key: "p" }, t.subtitle)
+      ]),
+      e("div", { className: "langs" }, [
+        e(
+          "button",
+          {
+            key: "langBtn",
+            className: "btn",
+            onClick: () => {
+              lang = lang === "ar" ? "en" : "ar";
+              setState(prev => ({ ...prev })); // force rerender
+            }
+          },
+          t.switch
+        )
+      ])
+    ]),
+
+    e("div", { className: "card", key: "intro" }, [
+      e("div", { className: "topBar", key: "topBar" }, [
+        e("div", { key: "note" }, [
+          e("h2", { key: "h2" }, t.section),
+          e("p", { className: "smallNote", key: "noteText" }, t.note)
+        ]),
+        e("div", { key: "actions" }, [
+          e(
+            "button",
+            {
+              key: "start",
+              className: "btn btnPrimary",
+              onClick: () => setState(prev => ({ ...prev, showResult: true }))
+            },
+            t.start
+          ),
+          e(
+            "button",
+            {
+              key: "reset",
+              className: "btn",
+              onClick: reset
+            },
+            t.reset
+          )
+        ])
+      ])
+    ]),
+
+    e("div", { key: "questions" }, [
+      ...QUESTIONS.map((q, idx) => {
+        const selected = state.answers[q.id];
+        return e("div", { className: "card question", key: q.id }, [
+          e("div", { className: "qTitle", key: "title" }, [
+            e("h3", { key: "h3" }, `${idx + 1}. ${q.q[lang]}`),
+            e("span", { key: "span" }, t.q)
+          ]),
+          e("div", { className: "qExplain", key: "exp" }, [
+            e("div", { key: "why" }, `${t.explain}: ${q.explain[lang]}`),
+            e("div", { key: "impact" }, `${t.impact}: ${q.impact[lang]}`)
+          ]),
+          e("div", { className: "options", key: "opts" }, [
+            ...q.options.map(opt =>
+              e(
+                "label",
+                { className: "radio", key: opt.value },
+                [
+                  e("input", {
+                    type: "radio",
+                    name: q.id,
+                    value: opt.value,
+                    checked: selected === opt.value,
+                    onChange: () => setAnswer(q.id, opt.value)
+                  }),
+                  e("span", null, opt.label[lang])
+                ]
+              )
+            )
+          ])
+        ]);
+      })
+    ]),
+
+    state.showResult &&
+      e("div", { className: "card result", key: "result" }, [
+        e("div", { className: "resultHeader", key: "header" }, [
+          e("h2", { key: "title" }, t.resultTitle),
+          e(
+            "span",
+            {
+              key: "badge",
+              className: `badge ${result.level}`
+            },
+            result.label
+          )
+        ]),
+
+        e("div", { className: "resultBox", key: "box1" }, [
+          e("h3", { key: "r1" }, lang === "ar" ? "الدرجة" : "Score"),
+          e("p", { key: "p1" }, `${score}`)
+        ]),
+
+        e("div", { className: "resultBox", key: "box2" }, [
+          e("h3", { key: "r2" }, lang === "ar" ? "تفسير مختصر" : "Summary"),
+          e("p", { key: "p2" }, rec[lang])
+        ]),
+
+        e("div", { className: "resultBox", key: "box3" }, [
+          e("h3", { key: "r3" }, lang === "ar" ? "التوصيات" : "Recommendations"),
+          e(
+            "p",
+            { key: "p3" },
+            lang === "ar"
+              ? "1) راجع مكتب هندسي معتمد للفحص الميداني.\n2) إذا كانت النتيجة عالية، توقف عن الاستخدام حتى يتم التقييم.\n3) قم بتوثيق الشقوق والصور وشاركها مع المهندس."
+              : "1) Consult a certified engineering office for field inspection.\n2) If high risk, stop using the building until evaluation.\n3) Document cracks/photos and share with the engineer."
+          )
+        ]),
+
+        e("div", { key: "actions2", style: { display: "flex", gap: "10px", flexWrap: "wrap" } }, [
+          e(
+            "button",
+            { key: "pdf", className: "btn btnPrimary", onClick: downloadPDF },
+            t.download
+          ),
+          e(
+            "button",
+            {
+              key: "reset2",
+              className: "btn",
+              onClick: reset
+            },
+            t.reset
+          )
+        ])
+      ]),
+
+    e("div", { className: "footer", key: "footer" }, [
+      e("p", { key: "p" }, t.footer),
+      e("div", { key: "links" }, [
+        e("a", { key: "privacy", href: "privacy.html" }, t.privacy),
+        " • ",
+        e("a", { key: "disclaimer", href: "disclaimer.html" }, t.disclaimer)
+      ])
+    ])
+  ]);
+}
+
+// jsPDF via CDN
+const script = document.createElement("script");
+script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+script.onload = () => {
+  window.jsPDF = window.jspdf.jsPDF;
+  ReactDOM.render(e(App), document.getElementById("root"));
+};
+document.head.appendChild(script);
