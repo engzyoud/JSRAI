@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSRAI - Structural Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div class="brand-text">
+        <h1>JSRAI</h1>
+        <p>Structural Tool</p>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#home">Home</a>
+      <a href="#tool">Tool</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <h2>Professional structural calculations online</h2>
+        <p>Fast, accurate, and compliant with engineering standards.</p>
+        <button id="startBtn">Open Tool</button>
+      </div>
+      <div class="hero-right">
+        <div class="card">
+          <h3>Instant results</h3>
+          <p>Get calculations and export PDF reports.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tool" class="tool">
+      <h2>Shear Design Tool</h2>
+
+      <div class="tool-grid">
+        <div class="card">
+          <label>Shear Force V<sub>u</sub> (kN)</label>
+          <input id="vu" type="number" placeholder="مثال: 200">
+        </div>
+        <div class="card">
+          <label>Concrete Strength f'c (MPa)</label>
+          <input id="fc" type="number" placeholder="مثال: 25">
+        </div>
+        <div class="card">
+          <label>Beam Width b (mm)</label>
+          <input id="b" type="number" placeholder="مثال: 300">
+        </div>
+        <div class="card">
+          <label>Effective Depth d (mm)</label>
+          <input id="d" type="number" placeholder="مثال: 500">
+        </div>
+        <div class="card">
+          <label>Shear Strength φV<sub>c</sub> (kN)</label>
+          <input id="vc" type="number" placeholder="مثال: 120">
+        </div>
+      </div>
+
+      <div class="result">
+        <h3>Result</h3>
+        <p id="resultText">Enter values and press Calculate.</p>
+        <button id="calcBtn">Calculate</button>
+        <button id="pdfBtn">Export PDF</button>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <h2>About</h2>
+      <p>This tool is built for engineers who need quick verification and reporting for structural design.</p>
+    </section>
+
+    <section id="contact" class="section contact">
+      <h2>Contact</h2>
+      <p>Reach out for custom design tools or engineering services.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Email</h3>
+          <p>example@email.com</p>
+        </div>
+        <div class="contact-card">
+          <h3>WhatsApp</h3>
+          <p>+962-XXXXXXXXX</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 JSRAI. All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
