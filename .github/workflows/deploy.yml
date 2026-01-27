@@ -6,9 +6,9 @@ on:
       - main
 
 permissions:
+  contents: write
   pages: write
   id-token: write
-  contents: read
 
 jobs:
   build:
@@ -29,10 +29,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
