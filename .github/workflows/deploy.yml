@@ -35,3 +35,5 @@ jobs:
           github_token: ${{ secrets.GH_PAT }}
           publish_dir: ./dist
           publish_branch: gh-pages
+          user_name: "engzyoud"
+          user_email: "engzyoud@users.noreply.github.com"
