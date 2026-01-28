@@ -1,13 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>أداة تقييم الانهيار - JSRAI</title>
-    <link rel="stylesheet" crossorigin href="/JSRAI/assets/index-CzB6VqE8.css">
-    <script type="module" crossorigin src="/JSRAI/assets/index-BtA4W97A.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تقييم سلامة الخرسانة - JSRAI</title>
+    <style>
+        /* دمج تصميم الـ global.css الخاص بك */
+        :root {
+            --bg0: #070A12; --bg1: #0B1220; --card: #0E1730; --card2: #111C3A;
+            --text: #EAF0FF; --muted: #AAB3CC; --accent: #7C3AED; --accent2: #22C55E;
+            --danger: #EF4444; --radius: 24px;
+        }
+        body {
+            margin: 0; font-family: "Segoe UI", Tahoma, sans-serif;
+            color: var(--text); background: linear-gradient(180deg, var(--bg0), var(--bg1));
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        .container { width: min(1200px, 92%); margin: 0 auto; padding: 20px 0; }
+        .header { background: rgba(14, 23, 48, 0.8); backdrop-filter: blur(10px); padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .card { background: var(--card); border-radius: var(--radius); padding: 25px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .btn { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .question { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .options { display: flex; gap: 10px; margin-top: 15px; }
+        .opt-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
+        .opt-btn.active { background: var(--accent2); border-color: var(--accent2); }
+        .result-box { text-align: center; padding: 40px; }
+        .risk-high { color: var(--danger); font-size: 24px; font-weight: bold; }
+        .footer { margin-top: auto; padding: 20px; text-align: center; font-size: 12px; color: var(--muted); }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <div><strong>JSRAI</strong> | أداة التقييم السريع</div>
+        <div style="font-size: 12px;">بسم الله الرحمن الرحيم</div>
+    </div>
+</header>
+
+<main class="container" id="app">
+    <div id="screen-home" class="card" style="text-align: center;">
+        <h1>أداة تقييم سلامة المنشآت الخرسانية</h1>
+        <p>هذه الأداة تساعد المهندسين في التقييم الأولي لحالة المنشأ بناءً على الملاحظات العينية.</p>
+        <button class="btn" onclick="startAssessment()">ابدأ التقييم الآن</button>
+    </div>
+
+    <div id="screen-assessment" class="card" style="display: none;">
+        <h2 id="q-title">جاري تحميل الأسئلة...</h2>
+        <div id="questions-list"></div>
+        <button class="btn" style="width: 100%; margin-top: 20px;" onclick="calculateResult()">عرض النتيجة النهائية</button>
+    </div>
+
+    <div id="screen-result" class="card" style="display: none;">
+        <div class="result-box">
+            <h2>النتيجة النهائية للتقييم</h2>
+            <div id="risk-level" class="risk-high">--</div>
+            <p id="risk-desc" style="margin-top: 20px;"></p>
+            <button class="btn" onclick="location.reload()">إعادة التقييم</button>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        جميع الحقوق محفوظة © JSRAI - تطوير م. زيود
+    </div>
+</footer>
+
+<script>
+    // منطق الأسئلة والتقييم (الذي كان في App.jsx و QuestionCard)
+    const questions = [
+        { id: 1, text: "هل توجد شقوق عرضية كبيرة في الأعمدة؟", ex: "الشقوق التي تزيد عن 2 ملم تشكل خطراً إنشائياً." },
+        { id: 2, text: "هل تلاحظ صدأ واضح في حديد التسليح؟", ex: "تساقط القشرة الخرسانية وظهور الحديد بلون بني." },
+        { id: 3, text: "هل هناك ميلان واضح في المبنى؟", ex: "يلاحظ بالعين المجردة أو باستخدام أدوات القياس." }
+    ];
+
+    let answers = {};
+
+    function startAssessment() {
+        document.getElementById('screen-home').style.display = 'none';
+        document.getElementById('screen-assessment').style.display = 'block';
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        const list = document.getElementById('questions-list');
+        list.innerHTML = questions.map(q => `
+            <div class="question">
+                <strong>س${q.id}: ${q.text}</strong>
+                <p style="font-size: 12px; color: var(--muted);">${q.ex}</p>
+                <div class="options">
+                    <button class="opt-btn" id="q${q.id}-yes" onclick="setAnswer(${q.id}, 'yes')">نعم</button>
+                    <button class="opt-btn" id="q${q.id}-no" onclick="setAnswer(${q.id}, 'no')">لا</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function setAnswer(qId, val) {
+        answers[qId] = val;
+        document.getElementById(`q${qId}-yes`).classList.remove('active');
+        document.getElementById(`q${qId}-no`).classList.remove('active');
+        document.getElementById(`q${qId}-${val}`).classList.add('active');
+    }
+
+    function calculateResult() {
+        let yesCount = Object.values(answers).filter(v => v === 'yes').length;
+        document.getElementById('screen-assessment').style.display = 'none';
+        document.getElementById('screen-result').style.display = 'block';
+
+        const riskEl = document.getElementById('risk-level');
+        const descEl = document.getElementById('risk-desc');
+
+        if (yesCount >= 2) {
+            riskEl.innerText = "خطورة عالية جداً";
+            riskEl.className = "risk-high";
+            descEl.innerText = "يجب إخلاء المنشأ فوراً واستدعاء لجنة هندسية مختصة للمعاينة الدقيقة.";
+        } else if (yesCount === 1) {
+            riskEl.innerText = "خطورة متوسطة";
+            riskEl.style.color = "orange";
+            descEl.innerText = "يُنصح بإجراء صيانة دورية ومراقبة تطور الشقوق أو الصدأ بشكل شهري.";
+        } else {
+            riskEl.innerText = "آمن حالياً";
+            riskEl.style.color = "var(--accent2)";
+            descEl.innerText = "بناءً على المعايير الظاهرية، لا توجد مؤشرات خطورة لحظية. استمر في الصيانة العامة.";
+        }
+    }
+</script>
+
+</body>
 </html>
