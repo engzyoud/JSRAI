@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/JSRAI/",
+  base: "/JSRAI/", // مهم جدا لـ GitHub Pages
 });
