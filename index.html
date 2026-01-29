@@ -1,12 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>أداة تقييم سلامة الخرسانة - JSRAI</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSRAI - المهندس زيود</title>
+    <style>
+        body { background-color: #070A12; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #0E1730; padding: 40px; border-radius: 25px; border: 1px solid #7C3AED; text-align: center; box-shadow: 0 10px 50px rgba(0,0,0,0.5); width: 90%; max-width: 500px; }
+        .logo { font-size: 40px; font-weight: bold; color: #22C55E; margin-bottom: 10px; }
+        .btn { background: linear-gradient(135deg, #7C3AED, #9D67FF); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); }
+        .question-box { display: none; margin-top: 20px; text-align: right; }
+        .active { display: block; }
+        .opt-btn { background: #16203D; color: white; border: 1px solid #334155; padding: 10px; border-radius: 8px; margin: 5px; cursor: pointer; width: 45%; }
+        .danger { background: #EF4444 !important; }
+        .safe { background: #22C55E !important; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="home">
+            <div class="logo">JSRAI</div>
+            <h2>تقييم سلامة المنشآت</h2>
+            <p>أداة المهندس زيود للفحص الإنشائي</p>
+            <button class="btn" onclick="start()">ابدأ الفحص الآن</button>
+        </div>
+
+        <div id="quiz" style="display:none;">
+            <p id="qText">1. هل هناك شقوق عرضية في الكمرات؟</p>
+            <button class="opt-btn" onclick="next('yes')">نعم</button>
+            <button class="opt-btn" onclick="next('no')">لا</button>
+        </div>
+
+        <div id="result" style="display:none;">
+            <h2 id="resTitle">النتيجة</h2>
+            <div id="resBadge" style="padding: 15px; border-radius: 10px; font-weight: bold;"></div>
+            <button class="btn" style="margin-top: 20px;" onclick="location.reload()">إعادة الفحص</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        function start() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+        }
+        function next(val) {
+            if(val === 'yes') score++;
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            const badge = document.getElementById('resBadge');
+            if(score > 0) {
+                badge.innerHTML = "⚠️ تنبيه: مطلوب فحص هندسي دقيق";
+                badge.className = "danger";
+            } else {
+                badge.innerHTML = "✅ الحالة مستقرة حالياً";
+                badge.className = "safe";
+            }
+        }
+    </script>
+</body>
 </html>
