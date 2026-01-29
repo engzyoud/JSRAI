@@ -12,13 +12,17 @@ export default function App() {
   return (
     <div className="app">
       <Header />
-      <Home />
-      <Assessment />
-      <Result />
-      <About />
-      <HowItWorks />
-      <Methodology />
-      <Privacy />
+
+      <main>
+        <Home />
+        <About />
+        <HowItWorks />
+        <Methodology />
+        <Assessment />
+        <Result />
+        <Privacy />
+      </main>
+
       <Footer />
     </div>
   );
