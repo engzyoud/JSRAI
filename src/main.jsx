@@ -5,6 +5,8 @@ import "./style.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <div dir="rtl" lang="ar">
+      <App />
+    </div>
   </React.StrictMode>
 );
