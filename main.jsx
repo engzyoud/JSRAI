@@ -1,13 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import './styles/global.css'
+import App from './App.jsx'
+
+// التعديل: حاولنا ننادي ملف الـ CSS من المسار المباشر
+// إذا كان ملف الـ CSS عندك اسمه مختلف (مثلاً index.css)، غير الاسم تحت فقط
+try {
+  import('./global.css');
+} catch (e) {
+  console.log("CSS file not found, loading without global styles");
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/JSRAI/">
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    <App />
+  </React.StrictMode>,
 )
