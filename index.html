@@ -3,98 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSRAI - تقييم سلامة الخرسانة</title>
+    <title>JSRAI - أداة تقييم سلامة الخرسانة</title>
     <style>
-        /* التنسيق مأخوذ من ملف global.css الخاص بك */
-        :root {
-            --bg0: #070A12; --bg1: #0B1220; --card: #0E1730; --accent: #7C3AED; --accent2: #22C55E; --text: #EAF0FF; --muted: #AAB3CC;
-        }
-        body {
-            margin: 0; font-family: "Segoe UI", Tahoma, sans-serif; color: var(--text);
-            background: radial-gradient(at 20% 10%, rgba(124,58,237,0.3), transparent), linear-gradient(180deg, var(--bg0), var(--bg1));
-            min-height: 100vh; display: flex; flex-direction: column;
-        }
-        .container { width: min(800px, 92%); margin: 0 auto; padding: 20px; }
-        .card { background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-weight: bold; font-size: 24px; }
-        .btn { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 14px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; margin-top: 20px; }
-        .question-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 18px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .options { display: flex; gap: 10px; margin-top: 15px; }
-        .opt-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: #111C3A; color: white; cursor: pointer; }
-        .opt-btn.active { background: var(--accent2); border-color: var(--accent2); }
+        body { background-color: #070A12; color: #EAF0FF; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .card { background: #0E1730; padding: 40px; border-radius: 24px; border: 2px solid #7C3AED; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 90%; }
+        h1 { color: #22C55E; margin-bottom: 10px; }
+        p { color: #AAB3CC; margin-bottom: 30px; }
+        .btn { background: #7C3AED; color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; text-decoration: none; display: inline-block; }
     </style>
 </head>
 <body>
-
-<div class="header">JSRAI</div>
-
-<div class="container">
-    <div id="home" class="card">
-        <h2 style="color: var(--accent2); text-align: center;">أداة تقييم سلامة المنشآت الخرسانية</h2>
-        <p style="text-align: center; color: var(--muted);">هذه الأداة مخصصة للفحص العيني الأولي للمنشآت المتضررة.</p>
-        <button class="btn" onclick="startApp()">ابدأ التقييم الميداني</button>
+    <div class="card">
+        <h1>JSRAI 🏗️</h1>
+        <p>أداة المهندس زيود لتقييم المنشآت الخرسانية</p>
+        <p>إذا ظهرت لك هذه الرسالة، فالموقع شغال 100%</p>
+        <button class="btn" onclick="alert('أهلاً بك يا مهندس، الموقع جاهز!')">ابدأ الفحص</button>
     </div>
-
-    <div id="quiz" class="card" style="display: none;">
-        <div id="question-list"></div>
-        <button class="btn" style="background: var(--accent2);" onclick="showResult()">عرض النتيجة النهائية</button>
-    </div>
-
-    <div id="result" class="card" style="display: none; text-align: center;">
-        <h2 id="res-level">جاري التحليل...</h2>
-        <p id="res-text" style="color: var(--muted); margin: 20px 0;"></p>
-        <button class="btn" onclick="location.reload()">إجراء فحص جديد</button>
-    </div>
-</div>
-
-<script>
-    const questions = [
-        { id: 1, text: "هل تلاحظ وجود شقوق مائلة أو عرضية في الأعمدة؟" },
-        { id: 2, text: "هل هناك صدأ واضح وتفتت في الغطاء الخرساني؟" },
-        { id: 3, text: "هل يوجد ترخيم (انحناء) ملحوظ في الأسقف أو الجسور؟" }
-    ];
-    let scores = {};
-
-    function startApp() {
-        document.getElementById('home').style.display = 'none';
-        document.getElementById('quiz').style.display = 'block';
-        render();
-    }
-
-    function render() {
-        const container = document.getElementById('question-list');
-        container.innerHTML = questions.map(q => `
-            <div class="question-box">
-                <div style="font-weight: bold;">${q.id}. ${q.text}</div>
-                <div class="options">
-                    <button class="opt-btn" id="q${q.id}y" onclick="set(${q.id}, 'yes')">نعم</button>
-                    <button class="opt-btn" id="q${q.id}n" onclick="set(${q.id}, 'no')">لا</button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function set(id, val) {
-        scores[id] = val;
-        document.getElementById('q'+id+'y').className = 'opt-btn' + (val==='yes'?' active':'');
-        document.getElementById('q'+id+'n').className = 'opt-btn' + (val==='no'?' active':'');
-    }
-
-    function showResult() {
-        const yesCount = Object.values(scores).filter(v => v === 'yes').length;
-        document.getElementById('quiz').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        const h = document.getElementById('res-level');
-        const p = document.getElementById('res-text');
-        
-        if(yesCount >= 2) {
-            h.innerText = "🚨 خطورة عالية"; h.style.color = "#EF4444";
-            p.innerText = "يجب استدعاء مكتب هندسي استشاري فوراً لإجراء تدعيم عاجل.";
-        } else {
-            h.innerText = "✅ حالة مستقرة"; h.style.color = "#22C55E";
-            p.innerText = "لا توجد مؤشرات خطورة لحظية، ينصح بالصيانة الدورية.";
-        }
-    }
-</script>
 </body>
 </html>
