@@ -1,31 +1,25 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { LangProvider } from './context/LangContext'
-import Layout from './pages/Layout'
-import Home from './pages/Home'
-import HowItWorks from './pages/HowItWorks'
-import Methodology from './pages/Methodology'
-import Assessment from './pages/Assessment'
-import Result from './pages/Result'
-import About from './pages/About'
-import Privacy from './pages/Privacy'
-import Disclaimer from './pages/Disclaimer'
+import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
+import Home from "./Home.jsx";
+import Assessment from "./Assessment.jsx";
+import Result from "./Result.jsx";
+import About from "./About.jsx";
+import HowItWorks from "./HowItWorks.jsx";
+import Methodology from "./Methodology.jsx";
+import Privacy from "./Privacy.jsx";
 
 export default function App() {
   return (
-    <LangProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="how" element={<HowItWorks />} />
-          <Route path="method" element={<Methodology />} />
-          <Route path="assessment" element={<Assessment />} />
-          <Route path="result" element={<Result />} />
-          <Route path="about" element={<About />} />
-          <Route path="privacy" element={<Privacy />} />
-          <Route path="disclaimer" element={<Disclaimer />} />
-        </Route>
-      </Routes>
-    </LangProvider>
-  )
+    <div className="app">
+      <Header />
+      <Home />
+      <Assessment />
+      <Result />
+      <About />
+      <HowItWorks />
+      <Methodology />
+      <Privacy />
+      <Footer />
+    </div>
+  );
 }
