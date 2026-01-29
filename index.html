@@ -1,30 +1,11 @@
-<!DOCTYPE html><!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>JSRAI - تقييم السلامة</title>
-    <style>
-        body { background: #070A12; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .box { background: #0E1730; padding: 30px; border-radius: 20px; border: 1px solid #7C3AED; }
-        button { background: #7C3AED; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 18px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h1>أداة تقييم سلامة الخرسانة (JSRAI)</h1>
-        <p>إذا رأيت هذه الرسالة، فالموقع يعمل الآن!</p>
-        <button onclick="alert('الأداة جاهزة للعمل، م. زيود')">ابدأ الفحص</button>
-    </div>
-</body>
-</html>
-غتت
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أداة تقييم سلامة الخرسانة - JSRAI</title>
     <style>
-        /* دمج تصميم الـ global.css الخاص بك */
+        /* دمج تصميم global.css الخاص بك */
         :root {
             --bg0: #070A12; --bg1: #0B1220; --card: #0E1730; --card2: #111C3A;
             --text: #EAF0FF; --muted: #AAB3CC; --accent: #7C3AED; --accent2: #22C55E;
@@ -32,117 +13,120 @@
         }
         body {
             margin: 0; font-family: "Segoe UI", Tahoma, sans-serif;
-            color: var(--text); background: linear-gradient(180deg, var(--bg0), var(--bg1));
-            min-height: 100vh; display: flex; flex-direction: column;
+            color: var(--text); background: radial-gradient(circle at 20% 10%, rgba(124,58,237,0.15), transparent), linear-gradient(180deg, var(--bg0), var(--bg1));
+            min-height: 100vh; display: flex; flex-direction: column; line-height: 1.6;
         }
-        .container { width: min(1200px, 92%); margin: 0 auto; padding: 20px 0; }
-        .header { background: rgba(14, 23, 48, 0.8); backdrop-filter: blur(10px); padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .card { background: var(--card); border-radius: var(--radius); padding: 25px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
-        .btn { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: bold; }
-        .question { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .container { width: min(800px, 92%); margin: 0 auto; padding: 20px 0; }
+        .card { background: var(--card); border-radius: var(--radius); padding: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px; }
+        .btn { background: var(--accent); color: white; border: none; padding: 14px 28px; border-radius: 14px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; width: 100%; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .question { margin-bottom: 30px; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.05); }
         .options { display: flex; gap: 10px; margin-top: 15px; }
-        .opt-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
-        .opt-btn.active { background: var(--accent2); border-color: var(--accent2); }
-        .result-box { text-align: center; padding: 40px; }
-        .risk-high { color: var(--danger); font-size: 24px; font-weight: bold; }
-        .footer { margin-top: auto; padding: 20px; text-align: center; font-size: 12px; color: var(--muted); }
+        .opt-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--card2); color: white; cursor: pointer; transition: 0.2s; }
+        .opt-btn.active-yes { background: var(--accent2); border-color: var(--accent2); }
+        .opt-btn.active-no { background: var(--danger); border-color: var(--danger); }
+        .result-title { font-size: 28px; font-weight: 900; margin-bottom: 10px; }
+        .footer { margin-top: auto; padding: 30px; text-align: center; color: var(--muted); font-size: 13px; }
     </style>
 </head>
 <body>
 
 <header class="header">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-        <div><strong>JSRAI</strong> | أداة التقييم السريع</div>
-        <div style="font-size: 12px;">بسم الله الرحمن الرحيم</div>
+        <div style="font-weight: 900; font-size: 22px; letter-spacing: 1px;">JSRAI</div>
+        <div style="color: var(--muted); font-size: 14px;">بسم الله الرحمن الرحيم</div>
     </div>
 </header>
 
-<main class="container" id="app">
-    <div id="screen-home" class="card" style="text-align: center;">
-        <h1>أداة تقييم سلامة المنشآت الخرسانية</h1>
-        <p>هذه الأداة تساعد المهندسين في التقييم الأولي لحالة المنشأ بناءً على الملاحظات العينية.</p>
-        <button class="btn" onclick="startAssessment()">ابدأ التقييم الآن</button>
+<main class="container">
+    <div id="home-screen" class="card" style="text-align: center;">
+        <h1 style="color: var(--accent2);">أداة تقييم سلامة المنشآت</h1>
+        <p>نظام التقييم السريع للمنشآت الخرسانية المتضررة بناءً على الملاحظات الفنية الميدانية.</p>
+        <div style="margin: 30px 0; height: 1px; background: rgba(255,255,255,0.1);"></div>
+        <button class="btn" onclick="showScreen('assessment-screen')">ابدأ الفحص الميداني</button>
     </div>
 
-    <div id="screen-assessment" class="card" style="display: none;">
-        <h2 id="q-title">جاري تحميل الأسئلة...</h2>
-        <div id="questions-list"></div>
-        <button class="btn" style="width: 100%; margin-top: 20px;" onclick="calculateResult()">عرض النتيجة النهائية</button>
+    <div id="assessment-screen" class="card" style="display: none;">
+        <h2 style="margin-bottom: 25px;">الأسئلة التقييمية</h2>
+        <div id="questions-container"></div>
+        <button class="btn" style="margin-top: 20px; background: var(--accent2);" onclick="showResult()">تحليل النتائج</button>
     </div>
 
-    <div id="screen-result" class="card" style="display: none;">
-        <div class="result-box">
-            <h2>النتيجة النهائية للتقييم</h2>
-            <div id="risk-level" class="risk-high">--</div>
-            <p id="risk-desc" style="margin-top: 20px;"></p>
-            <button class="btn" onclick="location.reload()">إعادة التقييم</button>
-        </div>
+    <div id="result-screen" class="card" style="display: none; text-align: center;">
+        <div id="res-icon" style="font-size: 60px; margin-bottom: 10px;">⚠️</div>
+        <div id="res-title" class="result-title">تحت المعالجة...</div>
+        <p id="res-desc" style="margin: 20px 0; color: var(--muted);"></p>
+        <button class="btn" onclick="location.reload()">إجراء فحص جديد</button>
     </div>
 </main>
 
 <footer class="footer">
-    <div class="container">
-        جميع الحقوق محفوظة © JSRAI - تطوير م. زيود
-    </div>
+    <div>تم التطوير بواسطة م. زيود - 2024</div>
+    <div style="margin-top: 5px;">JSRAI - Concrete Safety Assessment Tool</div>
 </footer>
 
 <script>
-    // منطق الأسئلة والتقييم (الذي كان في App.jsx و QuestionCard)
     const questions = [
-        { id: 1, text: "هل توجد شقوق عرضية كبيرة في الأعمدة؟", ex: "الشقوق التي تزيد عن 2 ملم تشكل خطراً إنشائياً." },
-        { id: 2, text: "هل تلاحظ صدأ واضح في حديد التسليح؟", ex: "تساقط القشرة الخرسانية وظهور الحديد بلون بني." },
-        { id: 3, text: "هل هناك ميلان واضح في المبنى؟", ex: "يلاحظ بالعين المجردة أو باستخدام أدوات القياس." }
+        { id: 1, text: "هل توجد شقوق عرضية حادة في العناصر الحاملة (أعمدة/جسور)؟", ex: "الشقوق التي تتجاوز 0.3 ملم في العناصر الإنشائية الرئيسية." },
+        { id: 2, text: "هل تلاحظ تآكل شديد أو ظهور لحديد التسليح؟", ex: "تساقط الغطاء الخرساني (Spalling) وظهور الصدأ." },
+        { id: 3, text: "هل يوجد ترخيم (Deflection) واضح في السقف أو الجسور؟", ex: "تقوس ملحوظ في منتصف الفضاءات الكبيرة." },
+        { id: 4, text: "هل هناك تسربات مائية مستمرة تؤثر على العناصر الإنشائية؟", ex: "رطوبة دائمة أو رشح مياه من خلال الشقوق." }
     ];
 
-    let answers = {};
+    let userAnswers = {};
 
-    function startAssessment() {
-        document.getElementById('screen-home').style.display = 'none';
-        document.getElementById('screen-assessment').style.display = 'block';
-        renderQuestions();
+    function showScreen(id) {
+        document.getElementById('home-screen').style.display = 'none';
+        document.getElementById('assessment-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'none';
+        document.getElementById(id).style.display = 'block';
+        if(id === 'assessment-screen') renderQuestions();
     }
 
     function renderQuestions() {
-        const list = document.getElementById('questions-list');
-        list.innerHTML = questions.map(q => `
+        const container = document.getElementById('questions-container');
+        container.innerHTML = questions.map(q => `
             <div class="question">
-                <strong>س${q.id}: ${q.text}</strong>
-                <p style="font-size: 12px; color: var(--muted);">${q.ex}</p>
+                <div style="font-weight: bold; font-size: 17px;">${q.id}. ${q.text}</div>
+                <div style="font-size: 13px; color: var(--muted); margin-top: 5px;">${q.ex}</div>
                 <div class="options">
-                    <button class="opt-btn" id="q${q.id}-yes" onclick="setAnswer(${q.id}, 'yes')">نعم</button>
-                    <button class="opt-btn" id="q${q.id}-no" onclick="setAnswer(${q.id}, 'no')">لا</button>
+                    <button id="q${q.id}-y" class="opt-btn" onclick="answer(${q.id}, 'yes')">نعم</button>
+                    <button id="q${q.id}-n" class="opt-btn" onclick="answer(${q.id}, 'no')">لا</button>
                 </div>
             </div>
         `).join('');
     }
 
-    function setAnswer(qId, val) {
-        answers[qId] = val;
-        document.getElementById(`q${qId}-yes`).classList.remove('active');
-        document.getElementById(`q${qId}-no`).classList.remove('active');
-        document.getElementById(`q${qId}-${val}`).classList.add('active');
+    function answer(qId, val) {
+        userAnswers[qId] = val;
+        document.getElementById(`q${qId}-y`).className = 'opt-btn' + (val === 'yes' ? ' active-yes' : '');
+        document.getElementById(`q${qId}-n`).className = 'opt-btn' + (val === 'no' ? ' active-no' : '');
     }
 
-    function calculateResult() {
-        let yesCount = Object.values(answers).filter(v => v === 'yes').length;
-        document.getElementById('screen-assessment').style.display = 'none';
-        document.getElementById('screen-result').style.display = 'block';
+    function showResult() {
+        const yesCount = Object.values(userAnswers).filter(v => v === 'yes').length;
+        showScreen('result-screen');
+        
+        const title = document.getElementById('res-title');
+        const desc = document.getElementById('res-desc');
+        const icon = document.getElementById('res-icon');
 
-        const riskEl = document.getElementById('risk-level');
-        const descEl = document.getElementById('risk-desc');
-
-        if (yesCount >= 2) {
-            riskEl.innerText = "خطورة عالية جداً";
-            riskEl.className = "risk-high";
-            descEl.innerText = "يجب إخلاء المنشأ فوراً واستدعاء لجنة هندسية مختصة للمعاينة الدقيقة.";
-        } else if (yesCount === 1) {
-            riskEl.innerText = "خطورة متوسطة";
-            riskEl.style.color = "orange";
-            descEl.innerText = "يُنصح بإجراء صيانة دورية ومراقبة تطور الشقوق أو الصدأ بشكل شهري.";
+        if (yesCount >= 3) {
+            title.innerText = "خطورة عالية جداً";
+            title.style.color = "var(--danger)";
+            icon.innerText = "🚨";
+            desc.innerText = "توصية فورية: يجب إخلاء الموقع واستدعاء فريق هندسي استشاري لإجراء فحوصات مخبرية (Core Test) وتقييم التدعيم العاجل.";
+        } else if (yesCount >= 1) {
+            title.innerText = "خطورة متوسطة";
+            title.style.color = "orange";
+            icon.innerText = "⚠️";
+            desc.innerText = "يوجد ملاحظات فنية تستدعي الصيانة والمعالجة (Repair) لمنع تفاقم الضرر. راقب تطور الشقوق خلال الفترة القادمة.";
         } else {
-            riskEl.innerText = "آمن حالياً";
-            riskEl.style.color = "var(--accent2)";
-            descEl.innerText = "بناءً على المعايير الظاهرية، لا توجد مؤشرات خطورة لحظية. استمر في الصيانة العامة.";
+            title.innerText = "المنشأ آمن حالياً";
+            title.style.color = "var(--accent2)";
+            icon.innerText = "✅";
+            desc.innerText = "لم يتم رصد عيوب إنشائية حرجة بالعين المجردة. يوصى بالاستمرار في أعمال الصيانة الوقائية الدورية.";
         }
     }
 </script>
