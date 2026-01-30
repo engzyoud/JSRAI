@@ -1,0 +1,310 @@
+:root{
+  --bg0:#070A12;
+  --bg1:#0B1220;
+  --card:#0E1730;
+  --card2:#111C3A;
+  --text:#EAF0FF;
+  --muted:#AAB3CC;
+  --accent:#7C3AED;
+  --accent2:#22C55E;
+  --danger:#EF4444;
+  --shadow: 0 18px 50px rgba(0,0,0,0.45);
+  --radius: 24px;
+  --radius2: 18px;
+  --border: rgba(255,255,255,0.08);
+  --primary: #7C3AED;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  margin:0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,0.35), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(34,197,94,0.25), transparent 55%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+button, input, select{font-family:inherit}
+
+.container{
+  width:min(1100px,92vw);
+  margin:0 auto;
+}
+
+/* ================== LAYOUT ================== */
+
+.appLayout{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.page{
+  flex:1;
+  padding:40px 0 80px;
+}
+
+.rtl{direction:rtl;text-align:right}
+.ltr{direction:ltr;text-align:left}
+
+/* ================== BACKGROUND ================== */
+
+.bgPattern{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(124,58,237,0.08), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(34,197,94,0.06), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(234,179,8,0.06), transparent 40%);
+  z-index:-1;
+}
+
+/* ================== CARDS ================== */
+
+.card{
+  background: linear-gradient(180deg, rgba(14,23,48,0.92), rgba(17,28,58,0.85));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:var(--radius);
+  backdrop-filter: blur(8px);
+}
+
+.card2{
+  background: linear-gradient(180deg, rgba(17,28,58,0.9), rgba(14,23,48,0.85));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:var(--radius2);
+}
+
+.cardBody{
+  padding:18px;
+}
+
+/* ================== BUTTONS ================== */
+
+.btn{
+  border:none;
+  padding:12px 16px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight:600;
+  letter-spacing:0.2px;
+  transition: transform .15s ease, filter .15s ease;
+}
+
+.btn:hover{transform: translateY(-1px); filter: brightness(1.05)}
+.btn:active{transform: translateY(0)}
+
+.btnPrimary{
+  background: linear-gradient(90deg, var(--accent), #4F46E5);
+  color:white;
+}
+
+.btnGhost{
+  background: rgba(255,255,255,0.08);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
+.btnDanger{
+  background: linear-gradient(90deg, var(--danger), #F59E0B);
+  color:white;
+}
+
+/* ================== HEADER ================== */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter: blur(12px);
+  background: rgba(7,10,18,0.65);
+  border-bottom:1px solid var(--border);
+}
+
+.headerInner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 0;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.brand .name{font-weight:900}
+.brand .tag{font-size:12px;color:var(--muted)}
+
+.nav{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.nav a{
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+.nav a.active{
+  background: rgba(255,255,255,0.08);
+  color:var(--text);
+}
+
+/* ================== HERO ================== */
+
+.hero{padding:70px 0 40px}
+
+.heroGrid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:22px;
+}
+
+.heroCard{padding:26px}
+.heroCard h1{margin:0;font-size:44px;line-height:1.05}
+.heroCard p{margin:14px 0 0;color:var(--muted);line-height:1.7}
+
+.heroActions{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.heroSide{
+  padding:22px;
+  border-radius:24px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ================== QUESTIONS ================== */
+
+.questionCard{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  background: rgba(255,255,255,0.04);
+  transition: all .25s ease;
+}
+
+.questionCard:hover{
+  box-shadow: 0 0 0 1px rgba(124,58,237,.25), var(--shadow);
+}
+
+.questionHeader{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.questionNum{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background: var(--primary);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+.questionExplain{
+  font-size:13px;
+  line-height:1.7;
+  color:var(--muted);
+}
+
+.options{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+
+.optionBtn{
+  padding:10px 18px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  cursor:pointer;
+  font-weight:600;
+}
+
+.optionBtn.success.active{background:#22c55e;color:#000}
+.optionBtn.warn.active{background:#eab308;color:#000}
+.optionBtn.danger.active{background:#ef4444;color:#fff}
+
+/* ================== RESULTS ================== */
+
+.resultGrid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+
+.resultBox{
+  padding:18px;
+  border-left:4px solid var(--primary);
+}
+
+.detailItem{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  margin-bottom:10px;
+  position:relative;
+}
+
+.detailItem::before{
+  content:'';
+  position:absolute;
+  inset-inline-start:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background: linear-gradient(to bottom, var(--primary), transparent);
+}
+
+/* ================== FOOTER ================== */
+
+.footer{
+  margin-top:40px;
+  border-top:1px solid var(--border);
+  background: var(--card);
+}
+
+.footerInner{padding:24px 0}
+
+.footerBottom{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px dashed var(--border);
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ================== RESPONSIVE ================== */
+
+@media(max-width:980px){
+  .heroGrid,.resultGrid{grid-template-columns:1fr}
+}
+
+@media(max-width:720px){
+  .heroCard h1{font-size:30px}
+}
