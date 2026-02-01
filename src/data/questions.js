@@ -1,363 +1,447 @@
 export const questions = [
 
+/* =========================
+   A — BASIC BUILDING INFO
+========================= */
+
 {
-id:1,
-text_ar:"هل توجد شقوق واضحة في الأعمدة الخرسانية؟",
-text_en:"Are there visible cracks in concrete columns?",
-ex_ar:"شقوق الأعمدة مؤشر مهم على ضعف عنصر حامل.",
-ex_en:"Column cracks are a serious structural indicator.",
-weight:3
+  id: 1,
+  text_ar: "هل عمر المبنى أكثر من 20 سنة؟",
+  text_en: "Is the building older than 20 years?",
+  ex_ar: "المباني القديمة قد تحتاج مراجعة خاصة حسب الكودات الحديثة.",
+  ex_en: "Older buildings may not meet modern code requirements.",
 },
 
 {
-id:2,
-text_ar:"هل توجد شقوق كبيرة في الجدران الحاملة؟",
-text_en:"Are there major cracks in load-bearing walls?",
-ex_ar:"الجدران الحاملة عنصر أساسي في نقل الأحمال.",
-ex_en:"Load-bearing wall cracks indicate load path issues.",
-weight:3
+  id: 2,
+  text_ar: "هل عدد الطوابق أكثر من 4 طوابق؟",
+  text_en: "Does the building have more than 4 floors?",
+  ex_ar: "كلما زاد الارتفاع زادت حساسية المبنى للأحمال والزلازل.",
+  ex_en: "Taller buildings are more sensitive to loads and earthquakes.",
 },
 
 {
-id:3,
-text_ar:"هل يوجد هبوط أو ميلان ملحوظ في أرضيات المبنى؟",
-text_en:"Is there noticeable floor settlement or tilt?",
-ex_ar:"الهبوط غير المنتظم مؤشر خطر إنشائي.",
-ex_en:"Uneven settlement is a structural warning.",
-weight:3
+  id: 3,
+  text_ar: "هل تم إضافة طابق أو توسعة بعد البناء الأصلي؟",
+  text_en: "Was an extra floor or extension added after original construction?",
+  ex_ar: "الإضافات قد تغيّر مسار الأحمال.",
+  ex_en: "Extensions may change load paths.",
 },
 
 {
-id:4,
-text_ar:"هل تم إزالة جدار داخلي سابقًا بدون دراسة هندسية؟",
-text_en:"Was any wall removed without engineering review?",
-ex_ar:"إزالة جدار قد تقطع مسار الأحمال.",
-ex_en:"Wall removal can disrupt load paths.",
-weight:3
+  id: 4,
+  text_ar: "هل تم إزالة جدران أو أعمدة أثناء تعديل داخلي؟",
+  text_en: "Were walls or columns removed during renovations?",
+  ex_ar: "إزالة عناصر إنشائية قد تضعف النظام.",
+  ex_en: "Removing structural elements weakens the system.",
 },
 
 {
-id:5,
-text_ar:"هل تم عمل فتحات جديدة في السقف أو الجدران؟",
-text_en:"Were new openings added in slabs or walls?",
-ex_ar:"الفتحات تقلل القدرة الحاملة.",
-ex_en:"Openings reduce structural capacity.",
-weight:3
+  id: 5,
+  text_ar: "هل استخدام المبنى الحالي مختلف عن الاستخدام الأصلي؟",
+  text_en: "Is the building use different from the original design?",
+  ex_ar: "مثلاً تحويل سكني إلى تجاري.",
+  ex_en: "Example: residential converted to commercial.",
+},
+
+/* =========================
+   B — VISIBLE DAMAGE
+========================= */
+
+{
+  id: 6,
+  text_ar: "هل توجد شقوق واضحة في الأعمدة؟",
+  text_en: "Are there visible cracks in columns?",
+  ex_ar: "خصوصاً الشقوق العميقة أو المستمرة.",
+  ex_en: "Especially deep or continuous cracks.",
 },
 
 {
-id:6,
-text_ar:"هل يوجد طابق مفتوح أكثر من باقي الطوابق (مواقف مثلًا)؟",
-text_en:"Is there an open soft-story level?",
-ex_ar:"الطابق المفتوح ضعف زلزالي معروف.",
-ex_en:"Soft story is a known seismic weakness.",
-weight:3
+  id: 7,
+  text_ar: "هل توجد شقوق في الجسور (الكمرات)؟",
+  text_en: "Are there cracks in beams?",
+  ex_ar: "خاصة قرب الأعمدة أو منتصف البحر.",
+  ex_en: "Especially near supports or mid-span.",
 },
 
 {
-id:7,
-text_ar:"هل تظهر حديد تسليح مكشوف في الأعمدة أو السقف؟",
-text_en:"Is reinforcement steel exposed anywhere?",
-ex_ar:"انكشاف الحديد يقلل المتانة.",
-ex_en:"Exposed steel reduces durability.",
-weight:3
+  id: 8,
+  text_ar: "هل توجد شقوق كبيرة في السقف؟",
+  text_en: "Are there major slab cracks?",
+  ex_ar: "شقوق طويلة أو متسعة.",
+  ex_en: "Long or wide cracks.",
 },
 
 {
-id:8,
-text_ar:"هل توجد تشققات طويلة في السقف؟",
-text_en:"Are there long cracks in slabs?",
-ex_ar:"تشققات السقف مؤشر انحناء زائد.",
-ex_en:"Long slab cracks indicate flexural distress.",
-weight:2
+  id: 9,
+  text_ar: "هل يوجد تقشر أو تساقط في الخرسانة؟",
+  text_en: "Is there concrete spalling or surface loss?",
+  ex_ar: "ظهور فراغات أو سقوط أجزاء.",
+  ex_en: "Concrete pieces falling off.",
 },
 
 {
-id:9,
-text_ar:"هل المبنى قديم ولم يتم فحصه منذ سنوات؟",
-text_en:"Is the building old without recent inspection?",
-ex_ar:"المباني القديمة تحتاج تقييم دوري.",
-ex_en:"Old buildings require periodic review.",
-weight:2
+  id: 10,
+  text_ar: "هل يظهر حديد التسليح في أي عنصر؟",
+  text_en: "Is reinforcement steel exposed anywhere?",
+  ex_ar: "ظهور الحديد مؤشر خطر.",
+  ex_en: "Exposed steel is a warning sign.",
+},
+
+/* =========================
+   C — DEFORMATION
+========================= */
+
+{
+  id: 11,
+  text_ar: "هل يوجد هبوط أو ميلان ملحوظ في أرضية؟",
+  text_en: "Is there noticeable floor settlement or slope?",
+  ex_ar: "عدم استواء الأرضية.",
+  ex_en: "Uneven floors.",
 },
 
 {
-id:10,
-text_ar:"هل يوجد اهتزاز ملحوظ عند المشي في بعض المناطق؟",
-text_en:"Is there noticeable vibration in floors?",
-ex_ar:"الاهتزاز قد يدل على ضعف صلابة.",
-ex_en:"Vibration indicates stiffness issues.",
-weight:2
+  id: 12,
+  text_ar: "هل الأبواب أو النوافذ لا تُغلق بسهولة؟",
+  text_en: "Do doors/windows no longer close properly?",
+  ex_ar: "قد يدل على حركة إنشائية.",
+  ex_en: "May indicate structural movement.",
 },
 
 {
-id:11,
-text_ar:"هل توجد شقوق حول الأعمدة في السقف؟",
-text_en:"Are there cracks around columns in slabs?",
-ex_ar:"قد تشير لضعف قص ثاقب.",
-ex_en:"May indicate punching risk.",
-weight:3
+  id: 13,
+  text_ar: "هل يوجد ميلان مرئي في أعمدة أو جدران؟",
+  text_en: "Is there visible column or wall leaning?",
+  ex_ar: "حتى لو كان بسيط.",
+  ex_en: "Even slight leaning matters.",
+},
+
+/* =========================
+   D — LOAD & USE
+========================= */
+
+{
+  id: 14,
+  text_ar: "هل توجد خزانات مياه كبيرة على السطح؟",
+  text_en: "Are there heavy water tanks on the roof?",
+  ex_ar: "الأحمال المركزة مهمة.",
+  ex_en: "Concentrated loads matter.",
 },
 
 {
-id:12,
-text_ar:"هل يوجد أجزاء خرسانة متقشرة أو متفتتة؟",
-text_en:"Is there spalled or crushed concrete?",
-ex_ar:"التقشر يقلل المقطع الفعال.",
-ex_en:"Spalling reduces section capacity.",
-weight:3
+  id: 15,
+  text_ar: "هل توجد معدات ثقيلة أو أرشيف كثيف داخل المبنى؟",
+  text_en: "Are heavy machines or dense storage present?",
+  ex_ar: "الأحمال التشغيلية الزائدة خطرة.",
+  ex_en: "High live loads are critical.",
 },
 
 {
-id:13,
-text_ar:"هل توجد مياه تتجمع فوق السقف؟",
-text_en:"Does water pond on the roof?",
-ex_ar:"تجمع المياه يزيد الأحمال.",
-ex_en:"Water ponding increases load.",
-weight:2
+  id: 16,
+  text_ar: "هل تم تخزين مواد ثقيلة فوق السقف؟",
+  text_en: "Are heavy materials stored on slabs?",
+  ex_ar: "مثل بلاط أو حديد.",
+  ex_en: "Like tiles or steel.",
+},
+
+/* =========================
+   E — WATER & CORROSION
+========================= */
+
+{
+  id: 17,
+  text_ar: "هل يوجد تسرب مياه في السقف أو الأعمدة؟",
+  text_en: "Are there water leaks in slabs or columns?",
+  ex_ar: "الماء يسرّع التآكل.",
+  ex_en: "Water accelerates corrosion.",
 },
 
 {
-id:14,
-text_ar:"هل تم إضافة خزانات أو أحمال ثقيلة لاحقًا؟",
-text_en:"Were heavy loads added later?",
-ex_ar:"زيادة الأحمال بدون دراسة خطر.",
-ex_en:"Added loads require review.",
-weight:3
+  id: 18,
+  text_ar: "هل توجد رطوبة مستمرة في عناصر إنشائية؟",
+  text_en: "Is there constant moisture in structural parts?",
+  ex_ar: "خصوصاً الأقبية.",
+  ex_en: "Especially basements.",
 },
 
 {
-id:15,
-text_ar:"هل توجد شقوق مائلة في الجدران؟",
-text_en:"Are there diagonal wall cracks?",
-ex_ar:"قد تدل على قص.",
-ex_en:"Diagonal cracks indicate shear.",
-weight:3
+  id: 19,
+  text_ar: "هل يوجد صدأ ظاهر على الحديد؟",
+  text_en: "Is there visible rust on steel bars?",
+  ex_ar: "مؤشر تآكل.",
+  ex_en: "Corrosion indicator.",
+},
+
+/* =========================
+   F — STRUCTURAL SYSTEM
+========================= */
+
+{
+  id: 20,
+  text_ar: "هل يوجد طابق مفتوح بالكامل بدون جدران (Soft story)؟",
+  text_en: "Is there an open soft story floor?",
+  ex_ar: "مثل طابق مواقف مفتوح.",
+  ex_en: "Example: open parking floor.",
 },
 
 {
-id:16,
-text_ar:"هل يوجد صدأ واضح في الحديد الظاهر؟",
-text_en:"Is there visible corrosion?",
-ex_ar:"الصدأ يضعف التسليح.",
-ex_en:"Corrosion weakens reinforcement.",
-weight:3
+  id: 21,
+  text_ar: "هل توزيع الجدران غير منتظم بين الطوابق؟",
+  text_en: "Are walls irregular between floors?",
+  ex_ar: "عدم انتظام رأسي.",
+  ex_en: "Vertical irregularity.",
 },
 
 {
-id:17,
-text_ar:"هل يوجد اختلاف كبير بين الطوابق في الجدران؟",
-text_en:"Is there vertical irregularity?",
-ex_ar:"عدم الانتظام يزيد الخطر الزلزالي.",
-ex_en:"Irregularity increases seismic risk.",
-weight:3
+  id: 22,
+  text_ar: "هل توجد فتحات كبيرة قريبة من الأعمدة؟",
+  text_en: "Are there large openings near columns?",
+  ex_ar: "فتحات مصاعد أو درج.",
+  ex_en: "Elevator/stair openings.",
+},
+
+/* =========================
+   G — EARTHQUAKE / LATERAL
+========================= */
+
+{
+  id: 23,
+  text_ar: "هل يقع المبنى في منطقة زلزالية؟",
+  text_en: "Is the building in a seismic zone?",
+  ex_ar: "حسب موقع المدينة.",
+  ex_en: "Based on location.",
 },
 
 {
-id:18,
-text_ar:"هل تم تعديل الأعمدة أو تغطيتها؟",
-text_en:"Were columns modified or boxed?",
-ex_ar:"تعديل الأعمدة خطر.",
-ex_en:"Column modification is risky.",
-weight:3
+  id: 24,
+  text_ar: "هل يوجد تشققات بعد هزة أرضية سابقة؟",
+  text_en: "Did cracks appear after a past earthquake?",
+  ex_ar: "حتى لو كانت خفيفة.",
+  ex_en: "Even minor quakes.",
+},
+
+/* =========================
+   H — FOUNDATION
+========================= */
+
+{
+  id: 25,
+  text_ar: "هل توجد شقوق في جدران القبو؟",
+  text_en: "Are there cracks in basement walls?",
+  ex_ar: "قد تدل على ضغط تربة.",
+  ex_en: "May indicate soil pressure.",
 },
 
 {
-id:19,
-text_ar:"هل توجد تشققات عند زوايا الفتحات؟",
-text_en:"Cracks at opening corners?",
-ex_ar:"نقطة تركيز إجهاد.",
-ex_en:"Stress concentration zone.",
-weight:2
+  id: 26,
+  text_ar: "هل يوجد هبوط غير متساوي في المبنى؟",
+  text_en: "Is there differential settlement?",
+  ex_ar: "جانب يهبط أكثر من آخر.",
+  ex_en: "One side lower than another.",
+},
+
+/* =========================
+   I — PROGRESSIVE COLLAPSE
+========================= */
+
+{
+  id: 27,
+  text_ar: "هل يوجد أعمدة قليلة تحمل مساحة كبيرة؟",
+  text_en: "Do few columns support large areas?",
+  ex_ar: "نظام غير موزع.",
+  ex_en: "Low redundancy system.",
 },
 
 {
-id:20,
-text_ar:"هل يوجد صوت فرقعة عند التحميل؟",
-text_en:"Do sounds occur under load?",
-ex_ar:"أصوات إنشائية مؤشر خطر.",
-ex_en:"Load sounds are warning.",
-weight:2
+  id: 28,
+  text_ar: "هل توجد عناصر حرجة لا يوجد لها بديل إنشائي؟",
+  text_en: "Are there critical elements with no redundancy?",
+  ex_ar: "فشل عنصر = فشل كبير.",
+  ex_en: "Single-point failure risk.",
 },
 
 {
-id:21,
-text_ar:"هل المبنى في منطقة زلزالية؟",
-text_en:"Is building in seismic area?",
-ex_ar:"يزيد متطلبات الأمان.",
-ex_en:"Higher seismic demand.",
-weight:2
+  id: 29,
+  text_ar: "هل يوجد أجزاء من السقف تعتمد على عنصر واحد فقط؟",
+  text_en: "Do slab areas rely on a single support?",
+  ex_ar: "خطر انهيار متدرج.",
+  ex_en: "Progressive collapse risk.",
+},
+
+/* =========================
+   J — EXECUTION QUALITY
+========================= */
+
+{
+  id: 30,
+  text_ar: "هل تظهر تعشيشات خرسانية؟",
+  text_en: "Are there honeycomb concrete areas?",
+  ex_ar: "فراغات داخل الخرسانة.",
+  ex_en: "Concrete voids.",
 },
 
 {
-id:22,
-text_ar:"هل يوجد أعمدة رفيعة مقارنة بالارتفاع؟",
-text_en:"Are columns slender?",
-ex_ar:"النحافة تقلل الاستقرار.",
-ex_en:"Slenderness reduces stability.",
-weight:3
+  id: 31,
+  text_ar: "هل توجد مناطق صب غير متجانسة؟",
+  text_en: "Are there poor concrete finish zones?",
+  ex_ar: "اختلافات واضحة.",
+  ex_en: "Uneven finish.",
+},
+
+/* =========================
+   K — ADDITIONAL SAFETY
+========================= */
+
+{
+  id: 32,
+  text_ar: "هل توجد أحمال إضافية حديثة لم تُدرس؟",
+  text_en: "Were new loads added without study?",
+  ex_ar: "معدات — خزانات — تخزين.",
+  ex_en: "Equipment/storage.",
 },
 
 {
-id:23,
-text_ar:"هل توجد شقوق في الكمرات؟",
-text_en:"Are beams cracked?",
-ex_ar:"شقوق الكمرات مهمة.",
-ex_en:"Beam cracks matter.",
-weight:3
+  id: 33,
+  text_ar: "هل توجد اهتزازات غير معتادة أثناء الاستخدام؟",
+  text_en: "Are there unusual vibrations?",
+  ex_ar: "اهتزاز أرضية.",
+  ex_en: "Floor vibration.",
 },
 
 {
-id:24,
-text_ar:"هل توجد إضافات بناء فوق السطح؟",
-text_en:"Roof additions exist?",
-ex_ar:"إضافات = أحمال جديدة.",
-ex_en:"Additions add load.",
-weight:3
+  id: 34,
+  text_ar: "هل يوجد صوت تشقق متكرر؟",
+  text_en: "Are there repeated cracking sounds?",
+  ex_ar: "أصوات من العناصر.",
+  ex_en: "Structural noises.",
 },
 
 {
-id:25,
-text_ar:"هل يوجد هبوط موضعي في أرضية غرفة؟",
-text_en:"Localized floor sag?",
-ex_ar:"هبوط موضعي مؤشر ضعف.",
-ex_en:"Local sag = weakness.",
-weight:3
+  id: 35,
+  text_ar: "هل توجد مناطق ضعف معروفة بالمخططات؟",
+  text_en: "Do drawings show known weak zones?",
+  ex_ar: "حسب مخططات قديمة.",
+  ex_en: "From drawings.",
 },
 
 {
-id:26,
-text_ar:"هل توجد فواصل مفتوحة في الخرسانة؟",
-text_en:"Visible construction joints open?",
-ex_ar:"فواصل ضعيفة تنقل قص أقل.",
-ex_en:"Weak joints reduce shear transfer.",
-weight:2
+  id: 36,
+  text_ar: "هل تم تنفيذ تدعيم سابق؟",
+  text_en: "Was strengthening previously done?",
+  ex_ar: "يدل على مشكلة سابقة.",
+  ex_en: "Indicates past issue.",
 },
 
 {
-id:27,
-text_ar:"هل حدث حريق سابق في المبنى؟",
-text_en:"Past fire exposure?",
-ex_ar:"الحرارة تضعف الخرسانة.",
-ex_en:"Fire weakens concrete.",
-weight:3
+  id: 37,
+  text_ar: "هل يوجد تباعد كبير بين الأعمدة؟",
+  text_en: "Are column spans unusually large?",
+  ex_ar: "بحور كبيرة.",
+  ex_en: "Large spans.",
 },
 
 {
-id:28,
-text_ar:"هل توجد أعمدة متضررة في الطابق الأرضي؟",
-text_en:"Ground columns damaged?",
-ex_ar:"خطر انهيار متسلسل.",
-ex_en:"Progressive collapse risk.",
-weight:3
+  id: 38,
+  text_ar: "هل توجد جدران قص كافية؟",
+  text_en: "Are shear walls present?",
+  ex_ar: "مقاومة جانبية.",
+  ex_en: "Lateral resistance.",
 },
 
 {
-id:29,
-text_ar:"هل يوجد تشققات في درج المبنى؟",
-text_en:"Stair cracks present?",
-ex_ar:"الدرج عنصر صلب مهم.",
-ex_en:"Stairs are stiff elements.",
-weight:2
+  id: 39,
+  text_ar: "هل توجد تشققات حول فتحات المصعد؟",
+  text_en: "Are there cracks near elevator cores?",
+  ex_ar: "منطقة حرجة.",
+  ex_en: "Critical zone.",
 },
 
 {
-id:30,
-text_ar:"هل يوجد أجزاء مكسورة في الحواف الخرسانية؟",
-text_en:"Broken concrete edges?",
-ex_ar:"تلف موضعي مؤشر ضعف.",
-ex_en:"Edge damage indicator.",
-weight:2
+  id: 40,
+  text_ar: "هل يوجد تاريخ مشاكل إنشائية؟",
+  text_en: "Is there a history of structural issues?",
+  ex_ar: "إصلاحات سابقة.",
+  ex_en: "Past repairs.",
 },
 
 {
-id:31,
-text_ar:"هل توجد اختلافات كبيرة في توزيع الجدران بين الطوابق؟",
-text_en:"Wall layout changes between floors?",
-ex_ar:"يزيد عدم الانتظام.",
-ex_en:"Irregularity risk.",
-weight:3
+  id: 41,
+  text_ar: "هل يوجد تحميل زائد على الشرفات؟",
+  text_en: "Are balconies overloaded?",
+  ex_ar: "تخزين كثيف.",
+  ex_en: "Heavy storage.",
 },
 
 {
-id:32,
-text_ar:"هل توجد علامات هبوط حول الأساسات؟",
-text_en:"Foundation settlement signs?",
-ex_ar:"الأساس أساس الأمان.",
-ex_en:"Foundation is critical.",
-weight:3
+  id: 42,
+  text_ar: "هل توجد شقوق عند التقاء الجسر مع العمود؟",
+  text_en: "Are there cracks at beam-column joints?",
+  ex_ar: "منطقة حساسة.",
+  ex_en: "Critical joint.",
 },
 
 {
-id:33,
-text_ar:"هل تم دمج شقق أو إزالة فواصل؟",
-text_en:"Units merged structurally?",
-ex_ar:"تغيير مسار الأحمال.",
-ex_en:"Load path change.",
-weight:3
+  id: 43,
+  text_ar: "هل يوجد اختلاف كبير بين طابق وآخر بالتصميم؟",
+  text_en: "Is there floor-to-floor structural irregularity?",
+  ex_ar: "عدم انتظام.",
+  ex_en: "Irregularity.",
 },
 
 {
-id:34,
-text_ar:"هل توجد شقوق تتزايد مع الوقت؟",
-text_en:"Cracks growing over time?",
-ex_ar:"تطور الشقوق خطر.",
-ex_en:"Growing cracks = risk.",
-weight:3
+  id: 44,
+  text_ar: "هل يوجد ضعف ظاهر في الطابق الأرضي؟",
+  text_en: "Is ground floor visibly weaker?",
+  ex_ar: "أعمدة أقل.",
+  ex_en: "Fewer columns.",
 },
 
 {
-id:35,
-text_ar:"هل توجد أبواب لا تُغلق بسبب ميلان؟",
-text_en:"Doors misaligned due to tilt?",
-ex_ar:"مؤشر حركة هيكلية.",
-ex_en:"Structural movement sign.",
-weight:2
+  id: 45,
+  text_ar: "هل يوجد تآكل في مناطق خارجية؟",
+  text_en: "Is there exterior structural corrosion?",
+  ex_ar: "تعرض للطقس.",
+  ex_en: "Weather exposure.",
 },
 
 {
-id:36,
-text_ar:"هل يوجد تحميل زائد للتخزين؟",
-text_en:"Heavy storage loads?",
-ex_ar:"أحمال إضافية خطرة.",
-ex_en:"Extra load risk.",
-weight:3
+  id: 46,
+  text_ar: "هل تم تغيير مخطط الأحمال؟",
+  text_en: "Was load layout changed?",
+  ex_ar: "تقسيمات.",
+  ex_en: "Layout changes.",
 },
 
 {
-id:37,
-text_ar:"هل المبنى غير منتظم بالشكل؟",
-text_en:"Building plan irregular?",
-ex_ar:"عدم انتظام زلزالي.",
-ex_en:"Seismic irregularity.",
-weight:3
+  id: 47,
+  text_ar: "هل يوجد فتحات كبيرة جديدة في السقف؟",
+  text_en: "Were new slab openings made?",
+  ex_ar: "بدون تدعيم.",
+  ex_en: "Without strengthening.",
 },
 
 {
-id:38,
-text_ar:"هل يوجد أجزاء مدعمة مؤقتًا؟",
-text_en:"Temporary supports present?",
-ex_ar:"تدعيم مؤقت = ضعف.",
-ex_en:"Temporary support = weakness.",
-weight:3
+  id: 48,
+  text_ar: "هل توجد مناطق بلاطات رقيقة جداً؟",
+  text_en: "Are there very thin slab zones?",
+  ex_ar: "سمك قليل.",
+  ex_en: "Thin slab.",
 },
 
 {
-id:39,
-text_ar:"هل توجد تشققات حول النوافذ؟",
-text_en:"Window corner cracks?",
-ex_ar:"نقطة إجهاد.",
-ex_en:"Stress zone.",
-weight:2
+  id: 49,
+  text_ar: "هل توجد أعمدة قصيرة ظاهرة؟",
+  text_en: "Are there short columns?",
+  ex_ar: "تأثير قص عالي.",
+  ex_en: "High shear risk.",
 },
 
 {
-id:40,
-text_ar:"هل تم فحص إنشائي رسمي سابقًا؟",
-text_en:"Was formal structural inspection done?",
-ex_ar:"الفحص السابق يقلل الغموض.",
-ex_en:"Inspection reduces uncertainty.",
-weight:1
-}
+  id: 50,
+  text_ar: "هل تشعر بعدم أمان إنشائي عند استخدام المبنى؟",
+  text_en: "Do you feel structural safety concern?",
+  ex_ar: "انطباع مستخدم مهم.",
+  ex_en: "User perception matters.",
+},
 
 ]
