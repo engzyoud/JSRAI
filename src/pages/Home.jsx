@@ -1,99 +1,77 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLang } from '../context/LangContext'
 
 export default function Home() {
-
+  const { t, lang } = useLang()
   const nav = useNavigate()
 
   return (
-    <div className="hero">
+    <div>
 
-      <div className="heroGrid">
-
-        {/* Main Hero */}
-
-        <div className="heroCard card">
-
-          {/* Bismillah */}
-
-          <h2 style={{
-            textAlign: 'center',
-            fontSize: 28,
-            fontWeight: 900,
-            marginBottom: 18
-          }}>
-            بسم الله الرحمن الرحيم
-          </h2>
-
-          {/* Tool Title */}
-
-          <h1 style={{ textAlign: 'center' }}>
-            JSRAI Structural Safety Screening
-          </h1>
-
-          <p style={{
-            textAlign: 'center',
-            marginTop: 10,
-            fontWeight: 600,
-            opacity: 0.9
-          }}>
-            Developed by Eng Suhaib Alzyoud
-          </p>
-
-          <p style={{
-            textAlign: 'center',
-            marginTop: 18,
-            lineHeight: 1.8
-          }}>
-            A professional structural field-screening tool used to estimate
-            building safety condition based on observable engineering indicators.
-            The assessment focuses on real structural risk signals — not design equations.
-          </p>
-
-          {/* Start Button */}
-
-          <div className="heroActions" style={{ justifyContent: 'center' }}>
-            <button
-              className="btn btnPrimary"
-              onClick={() => nav('/assessment')}
-            >
-              ابدأ الفحص
-            </button>
-          </div>
-
+      {/* Bismillah top center — not translated */}
+      <div style={{ textAlign: 'center', marginBottom: 30 }}>
+        <div style={{
+          fontSize: 28,
+          fontWeight: 900,
+          letterSpacing: 1,
+          background: 'linear-gradient(90deg,#22c55e,#38bdf8)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          بسم الله الرحمن الرحيم
         </div>
-
-        {/* Importance Section */}
-
-        <div className="heroSide card2">
-
-          <h3>لماذا الفحص الإنشائي مهم؟</h3>
-
-          <p>
-            العديد من حالات الفشل الإنشائي لا تبدأ بانهيار مباشر،
-            بل بتدهور موضعي في عنصر واحد ينتقل لاحقًا لبقية العناصر.
-          </p>
-
-          <p>
-            هذا النمط يُعرف هندسيًا باسم:
-            <strong> Progressive Collapse</strong>
-            أو الانهيار المتسلسل.
-          </p>
-
-          <p>
-            الفحص المبدئي المبكر يساعد على اكتشاف مؤشرات الضعف
-            قبل تطورها إلى فشل إنشائي حقيقي.
-          </p>
-
-          <p>
-            الأداة تركز على مؤشرات ميدانية قابلة للملاحظة
-            يمكن استخدامها لتقدير مستوى الأمان الأولي.
-          </p>
-
-        </div>
-
       </div>
 
-    </div>
-  )
-}
+      <div className="hero">
+        <div className="heroGrid">
+
+          {/* Main Card */}
+          <div className="heroCard card">
+
+            <h1>{t.hero.title}</h1>
+
+            {/* Developed by under tool name only */}
+            <div style={{
+              marginTop: 6,
+              fontSize: 13,
+              opacity: .7,
+              fontWeight: 600
+            }}>
+              {lang === 'ar'
+                ? 'Developed by Eng Suhaib Alzyoud'
+                : 'Developed by Eng Suhaib Alzyoud'}
+            </div>
+
+            <p>{t.hero.subtitle}</p>
+
+            <div className="heroActions">
+              <button
+                className="btn btnPrimary"
+                onClick={() => nav('/assessment')}
+              >
+                {t.hero.start}
+              </button>
+            </div>
+
+          </div>
+
+          {/* Importance Card */}
+          <div className="heroSide card2">
+
+            <h3>
+              {lang === 'ar'
+                ? 'أهمية الفحص الإنشائي المبدئي'
+                : 'Importance of Preliminary Structural Check'}
+            </h3>
+
+            <p>
+              {lang === 'ar'
+                ? 'الكشف المبدئي يساعد على اكتشاف مؤشرات ضعف محتملة قبل تطورها إلى مشاكل إنشائية خطرة. هذه الأداة تعطي قراءة أولية مبنية على مبادئ الكود والملاحظة الميدانية.'
+                : 'A preliminary structural check helps detect early weakness indicators before they develop into serious structural issues.'}
+            </p>
+
+            <div className="smallNote" style={{ marginTop: 10 }}>
+              {lang === 'ar'
+                ? 'النتيجة تقييم أولي — لا تغني عن الفحص الهندسي الموقعي.'
+                : 'Preliminary indicator — does
