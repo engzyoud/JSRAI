@@ -2,88 +2,76 @@ import React from 'react'
 import { useLang } from '../context/LangContext'
 
 export default function About() {
+
   const { lang } = useLang()
-  const isAr = (lang || 'ar') === 'ar'
 
   return (
-    <section className="about">
+    <div>
+
       <div className="pageHeader">
         <div>
-          <h2>{isAr ? 'عن الأداة' : 'About the Tool'}</h2>
+
+          <h2>
+            {lang === 'ar'
+              ? 'عن الأداة'
+              : 'About the Tool'}
+          </h2>
 
           <p>
-            {isAr
-              ? 'JSRAI هي أداة تقييم هندسي مبدئي تهدف إلى تحليل مستوى السلامة الإنشائية للمنشآت الخرسانية المسلحة، من خلال مجموعة من المؤشرات الميدانية والأسئلة الفنية المبنية على أسس هندسية معتمدة.'
-              : 'JSRAI is a preliminary engineering assessment tool designed to evaluate the structural safety of reinforced concrete buildings using a set of field-based indicators and engineering-based questions.'}
+            {lang === 'ar'
+              ? 'أداة تقييم سلامة المنشأ هي أداة فحص إنشائي مبدئي تساعد على إعطاء مؤشر أولي عن مستوى السلامة الهيكلية للمبنى.'
+              : 'The Structural Safety Assessment Tool provides a preliminary indicator of building structural safety.'}
           </p>
 
-          <p>
-            {isAr
-              ? 'تم تطوير هذه الأداة بالاعتماد على متطلبات كود ACI 318، ومفاهيم الأداء الزلزالي، مع مراعاة الخصوصية الزلزالية والبيئية في الأردن، بهدف تقديم تقييم أولي يدعم اتخاذ القرار الهندسي الصحيح.'
-              : 'The tool is developed based on ACI 318 requirements and seismic performance concepts, considering Jordan’s local seismic and environmental conditions, to support sound engineering decision-making.'}
-          </p>
         </div>
       </div>
+
+      {/* Main Card */}
 
       <div className="card">
         <div className="cardBody">
-          <h3>{isAr ? 'ماذا تعني JSRAI؟' : 'What does JSRAI stand for?'}</h3>
 
-          <p style={{ marginTop: 10 }}>
-            <strong>JSRAI</strong> —{' '}
-            {isAr
-              ? 'Jordan Structural Risk Assessment Intelligence'
-              : 'Jordan Structural Risk Assessment Intelligence'}
+          <p style={{ lineHeight: 1.9 }}>
+
+            {lang === 'ar'
+              ? `تعتمد الأداة على مجموعة أسئلة ميدانية وإنشائية تم اختيارها بعناية بحيث يمكن للمستخدم ملاحظتها أو معرفتها دون الحاجة لقراءة مخططات تصميمية معقدة. الهدف هو تمكين المهندسين وأصحاب المباني من إجراء تقييم أولي سريع قبل اللجوء إلى الفحص التفصيلي.`
+              : `The tool uses carefully selected field and structural questions that can be observed without complex design drawings. The goal is to enable a fast preliminary assessment before detailed engineering inspection.`}
+
           </p>
 
-          <p>
-            {isAr
-              ? 'وهي منظومة تقييم ذكية تهدف إلى تقديم قراءة مبدئية لمستوى الأداء الإنشائي للمنشآت في الأردن، مع التركيز على الجوانب الأكثر تأثيرًا على السلامة الهيكلية.'
-              : 'It represents an intelligent assessment framework aimed at providing a preliminary insight into structural performance of buildings in Jordan, focusing on the most critical safety-related aspects.'}
+          <p style={{ lineHeight: 1.9, marginTop: 12 }}>
+
+            {lang === 'ar'
+              ? `التقييم الناتج لا يعتبر بديلاً عن الدراسة الإنشائية أو التحليل العددي أو الفحص الموقعي بواسطة مهندس مختص، لكنه يساعد على كشف مؤشرات ضعف محتملة تستوجب المتابعة.`
+              : `The result does not replace structural analysis or professional inspection, but helps flag potential weakness indicators that require follow-up.`}
+
           </p>
+
         </div>
       </div>
 
-      <div className="card">
+      {/* Progressive Collapse Section */}
+
+      <div className="card" style={{ marginTop: 18 }}>
         <div className="cardBody">
-          <h3>{isAr ? 'أهداف الأداة' : 'Tool Objectives'}</h3>
 
-          <ul style={{ marginTop: 10, lineHeight: 1.9, color: 'var(--muted)' }}>
-            <li>
-              {isAr
-                ? 'توفير أداة سهلة الاستخدام لإجراء تقييم هندسي مبدئي سريع.'
-                : 'Providing an easy-to-use tool for rapid preliminary engineering assessment.'}
-            </li>
-            <li>
-              {isAr
-                ? 'تحديد المؤشرات التي تستدعي إجراء فحص تفصيلي أو تحليل إنشائي.'
-                : 'Identifying indicators that require detailed inspection or structural analysis.'}
-            </li>
-            <li>
-              {isAr
-                ? 'رفع مستوى الوعي الهندسي لدى المستخدمين حول سلامة المنشآت.'
-                : 'Raising engineering awareness among users regarding structural safety.'}
-            </li>
-            <li>
-              {isAr
-                ? 'دعم اتخاذ القرار الهندسي المبني على معايير علمية واضحة.'
-                : 'Supporting engineering decision-making based on clear scientific criteria.'}
-            </li>
-          </ul>
-        </div>
-      </div>
+          <h3>
+            {lang === 'ar'
+              ? 'علاقة الفحص بخطر الانهيار المتسلسل'
+              : 'Relation to Progressive Collapse Risk'}
+          </h3>
 
-      <div className="card">
-        <div className="cardBody">
-          <h3>{isAr ? 'حدود الاستخدام' : 'Usage Limitations'}</h3>
+          <p style={{ lineHeight: 1.9 }}>
 
-          <p className="smallNote">
-            {isAr
-              ? 'هذه الأداة مخصصة للتقييم الهندسي المبدئي فقط، ولا تُعد بديلاً عن الكشف الموقعي، أو الفحوصات المخبرية، أو التحليل الإنشائي التفصيلي. ويجب دائمًا الرجوع إلى مهندس إنشائي مختص قبل اتخاذ أي قرارات فنية.'
-              : 'This tool is intended for preliminary assessment only and does not replace on-site inspection, laboratory testing, or detailed structural analysis. Consultation with a licensed structural engineer is always recommended.'}
+            {lang === 'ar'
+              ? `بعض مؤشرات الضعف الإنشائي قد تزيد من احتمال حدوث انهيار متسلسل في حال فشل عنصر واحد حرج. لذلك تم تضمين أسئلة تتعلق باستمرارية العناصر الحاملة، حالة الأعمدة، الشقوق، الهبوط، والتعديلات غير المدروسة.`
+              : `Certain weakness indicators may increase the probability of progressive collapse if a critical element fails. Therefore, questions include load-bearing continuity, column condition, cracking, settlement, and uncontrolled modifications.`}
+
           </p>
+
         </div>
       </div>
-    </section>
+
+    </div>
   )
 }
