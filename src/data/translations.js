@@ -1,247 +1,235 @@
 export const translations = {
-  ar: {
-    appName: 'JSRAI — Structural Rapid Inspection Tool',
-    bismillah: 'بسم الله الرحمن الرحيم',
 
-    nav: {
-      home: 'الرئيسية',
-      how: 'كيف يعمل الفحص',
-      method: 'المنهجية',
-      assessment: 'ابدأ الفحص',
-      about: 'عن الأداة',
-    },
+ar: {
 
-    hero: {
-      title: 'فحص إنشائي مبدئي سريع للمباني',
-      subtitle:
-        'أداة فحص أولي تعتمد على مؤشرات هندسية ظاهرة تساعد في تقدير مستوى الخطورة الإنشائية ونمط الفشل المحتمل.',
-      start: 'ابدأ الفحص',
-    },
+appName: 'JSRAI — أداة الفحص الإنشائي المبدئي',
 
-    how: {
-      title: 'كيف يعمل الفحص؟',
-      p1: 'هذا فحص إنشائي مبدئي يعتمد على الملاحظة والتحقق من مؤشرات ضعف ظاهرة.',
-      p2: 'الأسئلة مبنية على أنماط فشل معروفة في العناصر الخرسانية.',
-      p3: 'النتيجة مؤشر هندسي أولي لدعم قرار الفحص التفصيلي.',
+bismillah: 'بسم الله الرحمن الرحيم',
 
-      stepsTitle: 'مراحل الفحص:',
-      steps: [
-        'فحص بصري للعناصر الإنشائية الرئيسية.',
-        'تحديد وجود شقوق أو هبوط أو تشوه.',
-        'تقييم مؤشرات القص والثقب والطابق الضعيف.',
-        'تقدير نمط الفشل المحتمل.',
-        'الحصول على توصيات تدعيم أو متابعة فحص.',
-      ],
-    },
+nav: {
+  home: 'الرئيسية',
+  how: 'كيف تعمل الأداة',
+  method: 'المنهجية',
+  assessment: 'ابدأ الفحص',
+  about: 'عن الأداة',
+  privacy: 'الخصوصية',
+  disclaimer: 'إخلاء مسؤولية'
+},
 
-    methodology: {
-      title: 'المنهجية',
-      p1: 'يعتمد الفحص على مؤشرات ضعف إنشائي معروفة.',
-      p2: 'الأسئلة موزعة حسب مناطق الخطورة.',
-      p3: 'النتيجة ليست بديلاً عن فحص هندسي تفصيلي.',
+hero: {
+  title: 'فحص إنشائي مبدئي لسلامة المباني',
+  subtitle: 'أداة تحليل أولي تعتمد على مؤشرات ميدانية وهندسية لتقدير مستوى الأمان الإنشائي — لا تغني عن الكشف الهندسي.',
+  start: 'ابدأ الفحص'
+},
 
-      bullets: [
-        'مؤشرات قص وثقب وانحناء.',
-        'مؤشرات طابق ضعيف وعدم انتظام.',
-        'مؤشرات انهيار متدرج.',
-        'تحليل نمط الفشل المتوقع.',
-      ],
-    },
+how: {
+  title: 'كيف تعمل الأداة',
+  p1: 'تعتمد الأداة على أسئلة ميدانية يمكن ملاحظتها بدون الرجوع لمخططات.',
+  p2: 'التحليل مبني على مبادئ الكود والممارسات الإنشائية.',
+  p3: 'الناتج مؤشر هندسي أولي وليس تقرير اعتماد.',
+  stepsTitle: 'خطوات الفحص:',
+  steps: [
+    'إدخال معلومات عامة عن المبنى',
+    'الإجابة على أسئلة ميدانية واضحة',
+    'تحليل المؤشرات الخطرة',
+    'استخراج توصية هندسية مبدئية'
+  ]
+},
 
-    assessment: {
-      title: 'الفحص الإنشائي',
-      intro:
-        'أجب بناءً على الملاحظة أو المعرفة المتاحة. الشرح تحت كل سؤال يوضح المقصود.',
-      btnNext: 'التالي',
-      btnPrev: 'السابق',
-      btnSubmit: 'احسب النتيجة',
-    },
+methodology: {
+  title: 'المنهجية الهندسية',
+  p1: 'التحليل يعتمد على مؤشرات ضعف إنشائي يمكن ملاحظتها بصرياً.',
+  p2: 'الأسئلة موزعة على عناصر التحمل الرئيسية.',
+  p3: 'كل مؤشر مرتبط بنمط فشل محتمل.',
+  bullets: [
+    'مؤشرات قص',
+    'مؤشرات انحناء',
+    'مؤشرات ثقب',
+    'مؤشرات طابق ضعيف',
+    'مؤشرات انهيار متسلسل'
+  ]
+},
 
-    result: {
-      title: 'نتيجة الفحص المبدئي',
-      disclaimer:
-        'هذه نتيجة فحص أولي ولا تغني عن فحص مهندس إنشائي أو تحليل تفصيلي.',
+assessment: {
+  title: 'ابدأ الفحص',
+  intro: 'أجب على الأسئلة بناءً على الملاحظة المباشرة لحالة المبنى.',
+  btnNext: 'التالي',
+  btnPrev: 'السابق',
+  btnSubmit: 'احسب النتيجة'
+},
 
-      level: 'مستوى الخطورة:',
-      score: 'المؤشر:',
-      summary: 'الملخص الهندسي:',
-      details: 'تفاصيل المؤشرات المؤثرة:',
+result: {
+  title: 'نتيجة الفحص الإنشائي',
+  disclaimer: 'هذا تحليل مبدئي مبني على مؤشرات مرئية — لا يغني عن كشف مهندس إنشائي.',
 
-      recommendationsTitle: 'التوصيات الهندسية الأولية:',
+  summary: 'الملخص الهندسي',
+  level: 'مستوى الأمان',
+  score: 'مؤشر الخطورة',
 
-      rec1:
-        'في حال وجود مؤشرات قص أو ثقب أو طابق ضعيف — يوصى بفحص إنشائي تفصيلي.',
-      rec2:
-        'قد يتطلب الأمر تدعيم موضعي للأعمدة أو البلاطات أو مناطق الفتحات.',
-      rec3:
-        'لا تعتمد على هذه النتيجة وحدها لاتخاذ قرار سلامة نهائي.',
+  pcvi: 'مؤشر خطورة الانهيار المتسلسل PCVI',
+  svi: 'مؤشر الضعف الزلزالي SVI',
+  failure: 'نمط الفشل المتوقع',
 
-      back: 'العودة للفحص',
-      pdf: 'تصدير تقرير PDF',
-    },
+  details: 'تفاصيل المؤشرات المؤثرة',
 
-    about: {
-      title: 'عن الأداة',
-      p1:
-        'أداة فحص إنشائي سريع مبنية على مؤشرات ضعف معروفة في الهندسة الإنشائية.',
-      p2:
-        'تستخدم كمرحلة أولى قبل الفحص التفصيلي أو الاختبارات الميدانية.',
-      developed: 'تم التطوير بواسطة Eng Suhaib Alzyoud',
-    },
+  recommendationsTitle: 'التوصيات الهندسية المبدئية',
 
-    footer: {
-      rights: '© JSRAI — Structural Rapid Inspection',
-      privacy: 'سياسة الخصوصية',
-      disclaimer: 'إخلاء المسؤولية',
-    },
+  safe: 'المبنى ضمن مؤشرات أمان مبدئي — لا تظهر علامات ضعف حرجة',
+  monitor: 'المبنى يحتاج مراقبة هندسية دورية',
+  strengthen: 'المبنى يحتاج دراسة تدعيم إنشائي',
 
-    privacy: {
-      title: 'سياسة الخصوصية',
-      p: 'لا يتم حفظ أي بيانات — كل النتائج محلية على جهازك.',
-    },
+  print: 'طباعة تقرير PDF',
+  back: 'عودة للفحص'
+},
 
-    disclaimer: {
-      title: 'إخلاء المسؤولية',
-      p: 'هذا فحص مبدئي وليس تقرير سلامة رسمي.',
-    },
+about: {
+  title: 'عن الأداة',
+  p1: 'أداة فحص إنشائي مبدئي مبنية على مؤشرات ميدانية مفهومة.',
+  p2: 'تستخدم للمساعدة في اتخاذ قرار أولي قبل الفحص التفصيلي.'
+},
 
-    languageLabel: 'اللغة',
+privacy: {
+  title: 'سياسة الخصوصية',
+  p: 'لا يتم حفظ أو إرسال أي بيانات. جميع الإجابات تبقى على جهازك.'
+},
 
-    yes: 'نعم',
-    no: 'لا',
-    unsure: 'غير متأكد',
+disclaimer: {
+  title: 'إخلاء مسؤولية',
+  p: 'هذه الأداة تقدم تقدير مبدئي فقط ولا تعتبر تقرير هندسي رسمي.'
+},
 
-    step: 'السؤال',
-    of: 'من',
+yes: 'نعم',
+no: 'لا',
+unsure: 'غير متأكد',
 
-    scoreLabels: {
-      low: 'منخفض',
-      mid: 'متوسط',
-      high: 'مرتفع',
-    },
-  },
+step: 'سؤال',
+of: 'من',
 
-  en: {
-    appName: 'JSRAI — Structural Rapid Inspection Tool',
+scoreLabels: {
+  low: 'آمن مبدئياً',
+  mid: 'يحتاج متابعة',
+  high: 'يحتاج تدعيم'
+}
 
-    // IMPORTANT — do NOT translate
-    bismillah: 'بسم الله الرحمن الرحيم',
+},
 
-    nav: {
-      home: 'Home',
-      how: 'How it works',
-      method: 'Methodology',
-      assessment: 'Start Inspection',
-      about: 'About',
-    },
 
-    hero: {
-      title: 'Rapid Structural Inspection Tool',
-      subtitle:
-        'A preliminary structural check based on visible engineering risk indicators.',
-      start: 'Start Inspection',
-    },
 
-    how: {
-      title: 'How inspection works',
-      p1: 'This is a preliminary structural check.',
-      p2: 'Questions reflect known failure mechanisms.',
-      p3: 'Result is an engineering indicator only.',
+/* ========================= ENGLISH ========================= */
 
-      stepsTitle: 'Inspection stages:',
-      steps: [
-        'Visual check of structural elements.',
-        'Observe cracks, deflection, distress.',
-        'Check shear and punching indicators.',
-        'Detect weak story behavior.',
-        'Get engineering risk summary.',
-      ],
-    },
 
-    methodology: {
-      title: 'Methodology',
-      p1: 'Based on known structural risk patterns.',
-      p2: 'Questions grouped by risk zones.',
-      p3: 'Not a substitute for full engineering review.',
 
-      bullets: [
-        'Shear and punching indicators',
-        'Weak story indicators',
-        'Irregularity indicators',
-        'Failure mode prediction',
-      ],
-    },
+en: {
 
-    assessment: {
-      title: 'Inspection',
-      intro:
-        'Answer based on observation or available information.',
-      btnNext: 'Next',
-      btnPrev: 'Previous',
-      btnSubmit: 'Calculate',
-    },
+appName: 'JSRAI — Preliminary Structural Check Tool',
 
-    result: {
-      title: 'Preliminary Inspection Result',
-      disclaimer:
-        'Preliminary engineering indicator only.',
+bismillah: 'بسم الله الرحمن الرحيم',
 
-      level: 'Risk level:',
-      score: 'Index:',
-      summary: 'Engineering summary:',
-      details: 'Key indicators:',
+nav: {
+  home: 'Home',
+  how: 'How it Works',
+  method: 'Methodology',
+  assessment: 'Start Check',
+  about: 'About',
+  privacy: 'Privacy',
+  disclaimer: 'Disclaimer'
+},
 
-      recommendationsTitle: 'Preliminary engineering actions:',
+hero: {
+  title: 'Preliminary Structural Safety Check',
+  subtitle: 'Field-based engineering indicators to estimate structural safety level.',
+  start: 'Start Check'
+},
 
-      rec1:
-        'Detailed structural review recommended if shear/punching indicators exist.',
-      rec2:
-        'Local strengthening may be required.',
-      rec3:
-        'Do not rely solely on this tool.',
+how: {
+  title: 'How the Tool Works',
+  p1: 'Questions are based on visible field indicators.',
+  p2: 'Analysis follows engineering practice.',
+  p3: 'Result is a preliminary indicator only.',
+  stepsTitle: 'Steps:',
+  steps: [
+    'Enter building info',
+    'Answer field questions',
+    'Risk indicators analyzed',
+    'Preliminary recommendation generated'
+  ]
+},
 
-      back: 'Back',
-      pdf: 'Export PDF',
-    },
+methodology: {
+  title: 'Engineering Methodology',
+  p1: 'Based on observable structural weakness indicators.',
+  p2: 'Questions grouped by load-bearing behavior.',
+  p3: 'Each indicator maps to a failure mode.',
+  bullets: [
+    'Shear indicators',
+    'Flexure indicators',
+    'Punching indicators',
+    'Soft story indicators',
+    'Progressive collapse indicators'
+  ]
+},
 
-    about: {
-      title: 'About',
-      p1:
-        'Rapid structural inspection tool based on engineering indicators.',
-      p2:
-        'Used as a first-stage screening.',
-      developed: 'Developed by Eng Suhaib Alzyoud',
-    },
+assessment: {
+  title: 'Start Check',
+  intro: 'Answer based on direct observation.',
+  btnNext: 'Next',
+  btnPrev: 'Previous',
+  btnSubmit: 'Compute Result'
+},
 
-    footer: {
-      rights: '© JSRAI',
-      privacy: 'Privacy',
-      disclaimer: 'Disclaimer',
-    },
+result: {
+  title: 'Structural Check Result',
+  disclaimer: 'Preliminary indicator — not an engineering certificate.',
 
-    privacy: {
-      title: 'Privacy',
-      p: 'No data stored.',
-    },
+  summary: 'Engineering Summary',
+  level: 'Safety Level',
+  score: 'Risk Index',
 
-    disclaimer: {
-      title: 'Disclaimer',
-      p: 'Preliminary only.',
-    },
+  pcvi: 'Progressive Collapse Index',
+  svi: 'Seismic Vulnerability Index',
+  failure: 'Expected Failure Mode',
 
-    languageLabel: 'Language',
+  details: 'Key Indicators',
 
-    yes: 'Yes',
-    no: 'No',
-    unsure: 'Unsure',
+  recommendationsTitle: 'Preliminary Engineering Recommendations',
 
-    step: 'Step',
-    of: 'of',
+  safe: 'No critical weakness indicators observed',
+  monitor: 'Engineering monitoring recommended',
+  strengthen: 'Structural strengthening study recommended',
 
-    scoreLabels: {
-      low: 'Low',
-      mid: 'Medium',
-      high: 'High',
-    },
-  },
+  print: 'Print PDF',
+  back: 'Back'
+},
+
+about: {
+  title: 'About Tool',
+  p1: 'Preliminary structural indicator tool.',
+  p2: 'Helps early engineering decision making.'
+},
+
+privacy: {
+  title: 'Privacy',
+  p: 'No data stored or transmitted.'
+},
+
+disclaimer: {
+  title: 'Disclaimer',
+  p: 'Preliminary tool only.'
+},
+
+yes: 'Yes',
+no: 'No',
+unsure: 'Unsure',
+
+step: 'Question',
+of: 'of',
+
+scoreLabels: {
+  low: 'Preliminarily Safe',
+  mid: 'Needs Monitoring',
+  high: 'Needs Strengthening'
+}
+
+}
+
 }
