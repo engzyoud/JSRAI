@@ -11,14 +11,16 @@ export default function Home() {
 
       {/* Bismillah top center — not translated */}
       <div style={{ textAlign: 'center', marginBottom: 30 }}>
-        <div style={{
-          fontSize: 28,
-          fontWeight: 900,
-          letterSpacing: 1,
-          background: 'linear-gradient(90deg,#22c55e,#38bdf8)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
+        <div
+          style={{
+            fontSize: 28,
+            fontWeight: 900,
+            letterSpacing: 1,
+            background: 'linear-gradient(90deg,#22c55e,#38bdf8)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}
+        >
           بسم الله الرحمن الرحيم
         </div>
       </div>
@@ -31,16 +33,15 @@ export default function Home() {
 
             <h1>{t.hero.title}</h1>
 
-            {/* Developed by under tool name only */}
-            <div style={{
-              marginTop: 6,
-              fontSize: 13,
-              opacity: .7,
-              fontWeight: 600
-            }}>
-              {lang === 'ar'
-                ? 'Developed by Eng Suhaib Alzyoud'
-                : 'Developed by Eng Suhaib Alzyoud'}
+            <div
+              style={{
+                marginTop: 6,
+                fontSize: 13,
+                opacity: 0.7,
+                fontWeight: 600
+              }}
+            >
+              Developed by Eng Suhaib Alzyoud
             </div>
 
             <p>{t.hero.subtitle}</p>
@@ -73,5 +74,4 @@ export default function Home() {
 
             <div className="smallNote" style={{ marginTop: 10 }}>
               {lang === 'ar'
-                ? 'النتيجة تقييم أولي — لا تغني عن الفحص الهندسي الموقعي.'
-                : 'Preliminary indicator — does
+                ? 'النتيجة
