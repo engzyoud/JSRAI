@@ -1,10 +1,13 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useLang } from '../context/LangContext'
+import ResultCard from '../components/ResultCard'
 import { computeResult } from '../data/resultLogic'
 import { questions } from '../data/questions'
 
 export default function Result() {
 
+  const { t, lang } = useLang()
   const nav = useNavigate()
   const loc = useLocation()
 
@@ -14,122 +17,130 @@ export default function Result() {
 
   const result = computeResult(answers)
 
-  const printReport = () => {
-    window.print()
+  /* =========================
+     Engineering Indicators
+  ========================== */
+
+  const pcvi = Math.min(100, Math.round(result.pct * 1.1))
+  const svi  = Math.min(100, Math.round(result.pct * 0.9))
+
+  let failureMode = lang === 'ar'
+    ? 'انحناء'
+    : 'Flexure'
+
+  if (pcvi > 70) failureMode = lang === 'ar' ? 'قص محتمل' : 'Shear'
+  if (pcvi > 85) failureMode = lang === 'ar' ? 'ثقب حول الأعمدة' : 'Punching'
+  if (svi  > 75) failureMode = lang === 'ar' ? 'طابق ضعيف' : 'Soft Story'
+
+  /* =========================
+     Recommendation Logic
+  ========================== */
+
+  let recommendationText = ''
+
+  if (result.level === 'low') {
+    recommendationText = t.result.safe
   }
 
-  const levelColor =
-    result.level === 'safe'
-      ? 'low'
-      : result.level === 'review'
-      ? 'mid'
-      : 'high'
+  if (result.level === 'mid') {
+    recommendationText =
+      lang === 'ar'
+        ? 'يوصى بإجراء كشف هندسي تفصيلي ومراقبة العناصر الحاملة، خاصة مناطق الشقوق والهبوط.'
+        : 'Engineering inspection and monitoring recommended.'
+  }
+
+  if (result.level === 'high') {
+    recommendationText =
+      lang === 'ar'
+        ? 'يوصى بدراسة تدعيم إنشائي. التدعيم قد يشمل: كمرات، أعمدة، مناطق اتصال، أو بلاطات.'
+        : 'Structural strengthening study recommended.'
+  }
+
+  /* =========================
+     PDF Print
+  ========================== */
+
+  const printReport = () => window.print()
+
+  /* ========================= */
+
+  const detailItems = result.details.slice(0, 15)
 
   return (
     <div>
 
       <div className="pageHeader">
         <div>
-          <h2>Structural Screening Result</h2>
-
-          <p>
-            This is a preliminary engineering screening result
-            based on observable field indicators only.
-          </p>
+          <h2>{t.result.title}</h2>
+          <p>{t.result.disclaimer}</p>
         </div>
       </div>
 
-      {/* Main Result Box */}
+      {/* ===== SUMMARY BOX ===== */}
 
-      <div className="card resultBox">
-
-        <h3>Safety Classification</h3>
-
-        <div className={`badgeLevel ${levelColor}`}>
-
-          {result.level === 'safe' && 'Structurally Acceptable'}
-          {result.level === 'review' && 'Engineering Review Recommended'}
-          {result.level === 'risk' && 'Structural Risk Detected'}
-
-        </div>
-
-        <p style={{ marginTop: 16, lineHeight: 1.8 }}>
-          {result.summary}
-        </p>
-
-      </div>
-
-      {/* Engineering Indicators */}
-
-      <div className="resultGrid" style={{ marginTop: 18 }}>
+      <div className="resultGrid">
 
         <div className="card resultBox">
-          <h3>Engineering Indicators</h3>
+          <h3>{t.result.summary}</h3>
 
-          <p><strong>PCVI:</strong> {result.pcvi}</p>
-          <p><strong>SVI:</strong> {result.svi}</p>
-          <p><strong>Expected Failure Mode:</strong> {result.failureMode}</p>
+          <div className={`badgeLevel ${result.level}`}>
+            {t.scoreLabels[result.level]}
+          </div>
+
+          <p><strong>{t.result.score}:</strong> {result.pct}</p>
+
+          <p><strong>{t.result.pcvi}:</strong> {pcvi}</p>
+          <p><strong>{t.result.svi}:</strong> {svi}</p>
+          <p><strong>{t.result.failure}:</strong> {failureMode}</p>
+
+          <button className="btn btnPrimary" onClick={printReport}>
+            {t.result.print}
+          </button>
 
         </div>
 
-        <div className="card resultBox">
-          <h3>Engineering Recommendations</h3>
+        {/* ===== RECOMMENDATIONS ===== */}
 
-          {result.recommendations.map((r, i) => (
-            <p key={i}>• {r}</p>
-          ))}
+        <div className="card resultBox">
+          <h3>{t.result.recommendationsTitle}</h3>
+          <p>{recommendationText}</p>
+
+          {result.level !== 'low' && (
+            <p>
+              {lang === 'ar'
+                ? 'يجب أن يتم التدعيم أو الفحص بواسطة مهندس إنشائي مختص.'
+                : 'Evaluation must be done by structural engineer.'}
+            </p>
+          )}
 
         </div>
 
       </div>
 
-      {/* Detail Factors */}
+      {/* ===== DETAILS ===== */}
 
       <div style={{ marginTop: 18 }}>
+        <ResultCard title={t.result.details}>
 
-        <div className="card">
-          <div className="cardBody">
+          {detailItems.map((d) => {
 
-            <h3>Key Risk Factors Detected</h3>
+            const q = questions.find(x => x.id === d.id)
+            const text = lang === 'ar' ? q.text_ar : q.text_en
 
-            {result.details.slice(0, 12).map((d) => {
+            return (
+              <div key={d.id} className="detailItem">
+                <strong>{d.id}. {text}</strong>
+                <div>{d.note}</div>
+              </div>
+            )
+          })}
 
-              const q = questions.find(x => x.id === d.id)
-
-              return (
-                <div key={d.id} className="detailItem">
-                  <strong>{q?.text_ar || q?.text_en}</strong>
-                  <div>{d.note}</div>
-                </div>
-              )
-            })}
-
-          </div>
-        </div>
-
+        </ResultCard>
       </div>
 
-      {/* Actions */}
-
-      <div style={{ marginTop: 18, display: 'flex', gap: 12 }}>
-
-        <button className="btn btnGhost" onClick={() => nav('/assessment')}>
-          Back to Inspection
-        </button>
-
-        <button className="btn btnPrimary" onClick={printReport}>
-          Print PDF Report
-        </button>
-
-      </div>
-
-      {/* Disclaimer */}
-
-      <div className="smallNote" style={{ marginTop: 20 }}>
-        This report is preliminary and does not replace
-        structural analysis, code verification,
-        or professional engineering inspection.
-      </div>
+      <button className="btn btnGhost" onClick={() => nav('/assessment')}>
+        {t.result.back}
+      </button>
 
     </div>
   )
