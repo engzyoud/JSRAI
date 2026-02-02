@@ -1,4 +1,4 @@
-/* ================= RESET ================= */
+/* ========= RESET ========= */
 
 * {
   box-sizing: border-box;
@@ -11,55 +11,42 @@ html, body, #root {
 }
 
 body {
-  font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-  background:
-    radial-gradient(circle at 20% 20%, #1e293b, transparent 40%),
-    radial-gradient(circle at 80% 0%, #0ea5e9, transparent 35%),
-    linear-gradient(180deg,#020617,#020617);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(180deg, #0f172a, #020617);
   color: #e5e7eb;
   line-height: 1.6;
 }
 
-/* ================= CONTAINER ================= */
+/* ========= LAYOUT ========= */
 
 .container {
-  max-width: 1150px;
+  max-width: 1100px;
   margin: auto;
-  padding: 28px;
+  padding: 24px;
 }
 
-/* ================= GLASS CARDS ================= */
+/* ========= CARDS ========= */
 
 .card {
-  background: rgba(15,23,42,.75);
-  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 18px;
   padding: 26px;
-  border: 1px solid rgba(148,163,184,.18);
-
-  backdrop-filter: blur(14px);
-
   box-shadow:
-    0 20px 40px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.06);
-
-  transition: .3s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 30px 60px rgba(0,0,0,.6),
-    inset 0 1px 0 rgba(255,255,255,.08);
+    0 10px 30px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  backdrop-filter: blur(8px);
 }
 
 .card2 {
-  background: linear-gradient(160deg,#020617,#020617,#0b1220);
-  border-radius: 20px;
+  background: linear-gradient(160deg, #0b1220, #020617);
+  border: 1px solid rgba(148,163,184,.18);
+  border-radius: 18px;
   padding: 24px;
-  border: 1px solid rgba(56,189,248,.25);
 }
 
-/* ================= HERO ================= */
+/* ========= HERO ========= */
 
 .hero {
   margin-top: 20px;
@@ -68,68 +55,61 @@ body {
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr 380px;
-  gap: 24px;
+  gap: 22px;
 }
 
 @media (max-width: 900px) {
-  .heroGrid { grid-template-columns: 1fr; }
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .heroCard h1 {
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 900;
-  letter-spacing: .4px;
-
-  background: linear-gradient(90deg,#22c55e,#38bdf8,#a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: .3px;
 }
 
 .heroCard p {
-  margin-top: 16px;
+  margin-top: 14px;
   opacity: .85;
   font-size: 16px;
 }
 
-/* ================= BUTTONS ================= */
+/* ========= BUTTONS ========= */
 
 .btn {
-  padding: 13px 24px;
-  border-radius: 14px;
+  padding: 12px 22px;
+  border-radius: 12px;
   border: none;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
-  font-size: 15px;
   transition: .25s;
+  font-size: 15px;
 }
 
 .btnPrimary {
   background: linear-gradient(90deg,#22c55e,#38bdf8);
   color: #021617;
-  box-shadow: 0 10px 24px rgba(56,189,248,.25);
 }
 
 .btnPrimary:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
   filter: brightness(1.1);
-}
-
-.btnDanger {
-  background: linear-gradient(90deg,#ef4444,#f97316);
-  color: white;
+  box-shadow: 0 8px 20px rgba(56,189,248,.25);
 }
 
 .btnGhost {
   background: transparent;
-  border: 1px solid rgba(148,163,184,.35);
+  border: 1px solid rgba(148,163,184,.3);
   color: #e5e7eb;
 }
 
 .btnGhost:hover {
-  background: rgba(148,163,184,.12);
+  background: rgba(148,163,184,.1);
 }
 
-/* ================= ACTION ROW ================= */
+/* ========= ACTION ROW ========= */
 
 .heroActions {
   margin-top: 22px;
@@ -138,58 +118,48 @@ body {
   flex-wrap: wrap;
 }
 
-/* ================= NAV ================= */
+/* ========= TEXT ========= */
+
+h1, h2, h3 {
+  color: #f8fafc;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.smallNote {
+  font-size: 13px;
+  opacity: .65;
+}
+
+/* ========= NAV ========= */
 
 .topNav {
   display: flex;
-  gap: 18px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
   font-size: 14px;
-  opacity: .9;
 }
 
 .topNav a {
   color: #93c5fd;
   text-decoration: none;
-  font-weight: 600;
 }
 
 .topNav a:hover {
-  color: #38bdf8;
+  text-decoration: underline;
 }
 
-/* ================= QUESTIONS ================= */
+/* ========= FORMS ========= */
 
-.qCard {
-  margin-top: 18px;
-}
-
-.qTitle {
-  font-size: 19px;
-  font-weight: 900;
-}
-
-.qHint {
-  margin-top: 8px;
-  font-size: 14px;
-  opacity: .7;
-}
-
-.answerRow {
-  margin-top: 18px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* ================= FORM ================= */
-
-input, select {
+input, select, textarea {
   width: 100%;
   padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(148,163,184,.3);
+  border-radius: 10px;
+  border: 1px solid rgba(148,163,184,.25);
   background: #020617;
   color: #e5e7eb;
   margin-top: 8px;
@@ -198,49 +168,53 @@ input, select {
 input:focus, select:focus {
   outline: none;
   border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56,189,248,.25);
+  box-shadow: 0 0 0 2px rgba(56,189,248,.25);
 }
 
-/* ================= BADGES ================= */
+/* ========= QUESTION BLOCK ========= */
 
-.badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
+.qCard {
+  margin-top: 16px;
+}
+
+.qTitle {
   font-weight: 800;
+  font-size: 18px;
 }
 
-.badgeSafe {
-  background: #16a34a33;
-  color: #4ade80;
+.qHint {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: .75;
 }
 
-.badgeWarn {
-  background: #f59e0b33;
-  color: #fbbf24;
+.answerRow {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.badgeDanger {
-  background: #ef444433;
-  color: #f87171;
-}
-
-/* ================= FOOTER ================= */
+/* ========= FOOTER ========= */
 
 .footer {
-  margin-top: 34px;
+  margin-top: 30px;
   text-align: center;
-  opacity: .55;
+  opacity: .6;
   font-size: 13px;
 }
 
-/* ================= RTL ================= */
+/* ========= RTL SUPPORT ========= */
 
-html[dir="rtl"] { direction: rtl; }
-html[dir="ltr"] { direction: ltr; }
+html[dir="rtl"] {
+  direction: rtl;
+}
 
-/* ================= ANIMATION ================= */
+html[dir="ltr"] {
+  direction: ltr;
+}
+
+/* ========= ANIMATION ========= */
 
 .fadeIn {
   animation: fade .5s ease;
