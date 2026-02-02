@@ -1,5 +1,3 @@
-/* ========= RESET ========= */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -18,15 +16,11 @@ body {
   line-height: 1.6;
 }
 
-/* ========= LAYOUT ========= */
-
 .container {
   max-width: 1100px;
   margin: auto;
   padding: 24px;
 }
-
-/* ========= CARDS ========= */
 
 .card {
   background: rgba(15, 23, 42, 0.85);
@@ -45,8 +39,6 @@ body {
   border-radius: 18px;
   padding: 24px;
 }
-
-/* ========= HERO ========= */
 
 .hero {
   margin-top: 20px;
@@ -75,8 +67,6 @@ body {
   opacity: .85;
   font-size: 16px;
 }
-
-/* ========= BUTTONS ========= */
 
 .btn {
   padding: 12px 22px;
@@ -109,16 +99,12 @@ body {
   background: rgba(148,163,184,.1);
 }
 
-/* ========= ACTION ROW ========= */
-
 .heroActions {
   margin-top: 22px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
-
-/* ========= TEXT ========= */
 
 h1, h2, h3 {
   color: #f8fafc;
@@ -133,8 +119,6 @@ h3 {
   font-size: 13px;
   opacity: .65;
 }
-
-/* ========= NAV ========= */
 
 .topNav {
   display: flex;
@@ -153,8 +137,6 @@ h3 {
   text-decoration: underline;
 }
 
-/* ========= FORMS ========= */
-
 input, select, textarea {
   width: 100%;
   padding: 12px;
@@ -165,13 +147,11 @@ input, select, textarea {
   margin-top: 8px;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: #38bdf8;
   box-shadow: 0 0 0 2px rgba(56,189,248,.25);
 }
-
-/* ========= QUESTION BLOCK ========= */
 
 .qCard {
   margin-top: 16px;
@@ -195,16 +175,12 @@ input:focus, select:focus {
   flex-wrap: wrap;
 }
 
-/* ========= FOOTER ========= */
-
 .footer {
   margin-top: 30px;
   text-align: center;
   opacity: .6;
   font-size: 13px;
 }
-
-/* ========= RTL SUPPORT ========= */
 
 html[dir="rtl"] {
   direction: rtl;
@@ -214,8 +190,6 @@ html[dir="ltr"] {
   direction: ltr;
 }
 
-/* ========= ANIMATION ========= */
-
 .fadeIn {
   animation: fade .5s ease;
 }
@@ -223,4 +197,37 @@ html[dir="ltr"] {
 @keyframes fade {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.appLayout {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bgPattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(2,6,23,.78), rgba(2,6,23,.92)),
+    url("/building.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  padding-top: 18px;
+  padding-bottom: 48px;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
 }
