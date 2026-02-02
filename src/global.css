@@ -18,3 +18,51 @@
   --radius: 24px;
   --radius2: 18px;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg0), var(--bg1));
+  color: var(--text);
+  font-family: system-ui, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  color: var(--text);
+  margin-top: 0;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+button {
+  background: var(--accent);
+  color: #052e16;
+  border: none;
+  padding: 12px 18px;
+  border-radius: var(--radius2);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.card {
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
